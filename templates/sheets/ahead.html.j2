@@ -1,0 +1,80 @@
+{% extends "hc/layout.html.j2" %}
+{% from "partials/hi.html.j2" import hi %}
+{% import "partials/sheet.html.j2" as hc with context %}
+{% set sheet = site.hc.sheets[sheet_id] %}
+{% set crumb = sheet.title %}
+{% set tree = sheet.tree %}
+{% set qtitles = {} %}
+{% for q in tree.questions %}{% set _ = qtitles.update({q.id: q.text}) %}{% endfor %}
+{% set otitles = {} %}
+{% for o in sheet.outcomes_view %}{% set _ = otitles.update({o.id: o.title}) %}{% endfor %}
+{% block title %}{{ sheet.title }}{% endblock %}
+{% block description %}{{ sheet.summary }}{% endblock %}
+{% block page_head %}<link rel="stylesheet" href="{{ url('assets/css/hc-doc.css') }}">
+<script type="module" src="{{ url('assets/js/hc-tree.js') }}"></script>{% endblock %}
+{% block page_class %} hc-page--doc{% endblock %}
+{% import "op/macros.html.j2" as op with context %}
+{% block content %}
+{{ hc.head(sheet, "Ответьте на несколько вопросов, и мы соберём лист: что оформить на этой неделе и что взять с собой. Ответы не сохраняются и никуда не отправляются") }}
+<hc-tree class="hc-tree" data-start="{{ tree.start }}">
+  {{ hc.nojs_note(true) }}
+  <div class="hc-quiz hc-screen" data-hc-quiz>
+    <p class="hc-quiz__count hc-js-only" data-hc-qcount hidden></p>
+    {% for q in tree.questions %}
+    <fieldset class="hc-q" data-hc-q="{{ q.id }}">
+      <legend class="hc-q__text">{{ q.text }}</legend>
+      {% if q.get("help") %}<p class="op-field__hint">{{ q.help }}</p>{% endif %}
+      <div class="hc-q__opts">
+        {% for o in q.options %}
+        <button type="button" class="op-btn op-btn--secondary hc-q__opt hc-js-only" data-hc-answer="{{ o.value }}" data-next="{{ o.get('next', '') }}" data-outcomes="{{ o.get('outcomes', []) | join(' ') }}">{{ o.label }}</button>
+        {% endfor %}
+      </div>
+      <ul class="hc-q__map hc-nojs-only">
+        {% for o in q.options %}
+        <li><strong>{{ o.label }}</strong>{% if o.get("outcomes") %}: {% for oid in o.outcomes %}{{ otitles.get(oid, oid) }}{{ ", " if not loop.last }}{% endfor %}{% endif %}{% if o.get("next") %}{{ "," if o.get("outcomes") else ":" }} дальше вопрос «{{ qtitles[o.next] }}»{% endif %}</li>
+        {% endfor %}
+      </ul>
+    </fieldset>
+    {% endfor %}
+    <div class="hc-answers hc-js-only" data-hc-answers hidden>
+      <h2 class="hc-answers__title">Ваши ответы</h2>
+      <ol class="hc-answers__list" data-hc-answer-list></ol>
+      <button type="button" class="op-btn op-btn--link" data-hc-restart>{{ hi("refresh-cw") }}<span>Ответить заново</span></button>
+    </div>
+  </div>
+  <article class="hc-doc hc-result" data-hc-result aria-labelledby="hc-result-title">
+    {{ hc.print_head(sheet) }}
+    <h2 id="hc-result-title" tabindex="-1">Что оформить на этой неделе</h2>
+    <p class="hc-result__lead hc-screen" data-hc-result-lead>Без ответов показываем все варианты. Ответьте на вопросы выше, и останется только то, что нужно вам</p>
+    <ul class="hc-outcomes">
+      {% for o in sheet.outcomes_view %}
+      <li class="hc-outcome{{ ' is-unverified' if not o.printable }}" data-hc-outcome="{{ o.id }}" data-hc-unv-quotes="{{ o.quotes | rejectattr('printable') | list | length }}"{% if o.always %} data-always{% endif %}>
+        {{ hc.box() }}
+        <div class="hc-outcome__body">
+          <h3 class="hc-outcome__title">{{ o.title }}</h3>
+          <p class="hc-outcome__what{{ ' hc-screen' if not o.what_printable }}">{{ o.what }}</p>
+          {% if not o.what_printable %}<p class="hc-excluded hc-skipped hc-print-only">Пункт не проверен: пояснение смотрите на экране</p>{% endif %}
+          {% for q in o.quotes if q.printable %}
+          <figure class="hc-pquote">
+            <blockquote data-verbatim>{{ q.text_verbatim }}</blockquote>
+            <figcaption>{{ op.cite(q.source) }}</figcaption>
+          </figure>
+          {% endfor %}
+          {% if o.take %}
+          <p class="hc-outcome__take-title">Что взять</p>
+          <ul class="hc-outcome__take">{% for t in o.take %}<li>{{ t }}</li>{% endfor %}</ul>
+          {% endif %}
+          {% if not o.what_printable %}<p class="hc-unv hc-screen"><span><strong>Не проверено.</strong> {{ o.reason }}. На листе будут название и что взять, а пояснение только здесь</span></p>
+          {% elif not o.printable %}<p class="hc-unv hc-screen"><span><strong>Не проверено юристом в РФ.</strong> На лист попадёт с пометкой «Черновик»</span></p>{% endif %}
+          {{ hc.basis(o.acts) }}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    <p class="hc-result__none hc-screen">Шаблонов доверенностей здесь нет: форму и текст подскажет нотариус или юрист</p>
+    {{ hc.sheet_footer(sheet, "ahead/", validity=false) }}
+  </article>
+  {{ hc.print_bar() }}
+</hc-tree>
+{{ hc.more(sheet) }}
+{% endblock %}

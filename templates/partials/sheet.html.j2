@@ -1,0 +1,363 @@
+{% from "partials/hi.html.j2" import hi %}
+{% import "op/macros.html.j2" as op with context %}
+{% macro head(sheet, lead=none) -%}
+<header class="hc-head hc-screen">
+  <h1>{{ sheet.title }}</h1>
+  <p class="op-lead">{{ lead or sheet.summary }}</p>
+  <div class="hc-demo" data-hc-demo-banner hidden>
+    {{ hi("info") }}
+    <p><strong>Пример на выдуманных данных.</strong> Ничего не сохраняется. <a href="./">Заполнить свой лист</a></p>
+  </div>
+</header>
+{%- endmacro %}
+
+{% macro now_suggest(f, line) -%}
+<template data-hc-sugg-tpl="{{ f.id }}">
+  <div class="hc-sugg {{ 'hc-sugg--ok' if line.verified else 'hc-sugg--unv' }}" data-hc-data-for="{{ f.id }}"{% if line.verified %} data-number="{{ line.number }}" data-verified-at="{{ line.verified_at }}" data-src="Проверено {{ line.verified_at | ru_date }}"{% endif %}>
+    {% if not line.verified %}{{ unverified_inline() }}{% endif %}
+    <a class="hc-sugg__num" href="{{ line.number | tel }}">{{ line.number | tel_display }}</a>
+    <p>{{ line.label }}{% if line.third_party %}. Это сторонняя линия, мы с ней не связаны{% endif %}{% if line.note %}. {{ line.note }}{% endif %}</p>
+    {% if line.verified %}<p>Проверено {{ line.verified_at | ru_date }}. Номер будет на листе, если вы не впишете свой</p>
+    {% else %}<p>Звонком или по официальной публикации не проверено, поэтому сам на лист не попадёт</p>
+    <button type="button" class="op-btn op-btn--secondary hc-js-only" data-hc-confirm="{{ f.id }}" data-number="{{ line.number }}">{{ hi("phone-call") }}<span>Я позвонил, номер работает: вписать</span></button>{% endif %}
+  </div>
+</template>
+{%- endmacro %}
+
+{% macro form_templates(sheet) -%}
+{% for f in sheet.field_map.values() if f.suggest == "now" and f.suggest_id in site.hc.now %}{{ now_suggest(f, site.hc.now[f.suggest_id]) }}{% endfor %}
+<template data-hc-err-tpl><p class="op-field__error" hidden>{{ icon("circle-alert") }}<span><strong>Ошибка:</strong> <span data-hc-error-text></span></span></p></template>
+{%- endmacro %}
+
+
+
+{% macro row(f, cls="", label=none, define=true) -%}
+{% set shown = label or f.print_label or f.label %}
+<div class="hc-row{{ ' hc-row--area' if f.type == 'textarea' }}{{ ' ' ~ cls if cls }}" data-hc-row="{{ f.id }}"{% if define %} data-t="{{ f.type }}" data-m="{{ f.max_len }}"{% if f.label != shown %} data-l="{{ f.label }}"{% endif %}{% if f.hint %} data-h="{{ f.hint }}"{% endif %}{% if f.demo %} data-d="{{ f.demo }}"{% endif %}{% if f.qr_order %} data-qo="{{ f.qr_order }}" data-qk="{{ f.qr_key }}"{% endif %}{% if f.required %} data-r{% endif %}{% if f.autocomplete and f.autocomplete != "off" %} data-ac="{{ f.autocomplete }}"{% endif %}{% if f.suggest %} data-s="{{ f.suggest }}" data-si="{{ f.suggest_id }}"{% endif %}{% if f.blank_lines > 1 %} data-bl="{{ f.blank_lines }}"{% endif %}{% endif %}>
+<span class="hc-row__label">{{ shown }}</span>
+<span class="hc-row__val" data-hc-out="{{ f.id }}"></span>
+<span class="hc-row__lines" aria-hidden="true">{% for _ in range(f.blank_lines) %}<span class="hc-line"></span>{% endfor %}</span>
+{% if f.fixed_caption %}<span class="hc-row__cap">{{ f.fixed_caption }}</span>{% endif %}
+</div>
+{%- endmacro %}
+
+{% macro locked(b) -%}
+<div class="hc-locked" data-hc-block="{{ b.id }}" data-hc-print="locked">
+  <p class="hc-locked__text">{{ icon("phone") }}<span>{{ b.text }}</span></p>
+  <p class="hc-locked__nums">
+    {% for nid in b.now_ids if nid in site.hc.now and site.hc.now[nid].verified %}<span class="hc-locked__num">{{ site.hc.now[nid].number }}</span>{% endfor %}
+  </p>
+</div>
+{%- endmacro %}
+
+{% macro script(b) -%}
+<section class="hc-pblock hc-script" data-hc-block="{{ b.id }}" data-hc-print="own">
+  <h3 class="hc-pblock__title">{{ b.title }}</h3>
+  <p class="hc-script__lead">{{ b.text }}</p>
+  <ul class="hc-script__lines">
+    {% for parts in b.line_parts %}
+    <li>{% for p in parts %}{% if p.field %}<span class="hc-inline" data-hc-out="{{ p.field }}"{% if p.fmt %} data-hc-fmt="{{ p.fmt }}"{% endif %}></span><span class="hc-inline-line" aria-hidden="true"></span>{% else %}{{ p.text }}{% endif %}{% endfor %}</li>
+    {% endfor %}
+  </ul>
+  {% if b.review.needs in ("medical", "both") and not b.review.reviewed_by %}<p class="hc-script__draft">Наш текст, не проверен медиком в РФ</p>{% endif %}
+</section>
+{%- endmacro %}
+
+{% macro page_addr(path="") -%}
+{{ (site.site_url ~ site.base ~ path) | replace("https://", "") | replace("http://", "") }}
+{%- endmacro %}
+
+{% macro skipped(n, after) -%}
+{{ "Ещё " if after }}{{ n | plural("пункт не проверен", "пункта не проверены", "пунктов не проверены") }}, смотрите на экране
+{%- endmacro %}
+
+{% macro block_skipped(title, path) -%}
+<p class="hc-skipped">{% if title %}<strong>{{ title }}.</strong> {% endif %}Пункты ещё не проверены, смотрите их на экране: {{ page_addr(path) }}</p>
+{%- endmacro %}
+
+{% macro form_only(b) -%}
+<section class="hc-formonly" data-hc-block="{{ b.id }}" data-hc-form="fill" hidden>
+  {% if b.title %}<h3 class="hc-pblock__title">{{ b.title }}</h3>{% endif %}
+  {% for f in b.field_list %}{{ row(f) }}{% endfor %}
+</section>
+{%- endmacro %}
+
+{% macro ask(text) -%}
+<section class="hc-ask" data-hc-ask aria-labelledby="hc-ask-title" hidden>
+  <h2 id="hc-ask-title" tabindex="-1">Это ваше устройство?</h2>
+  <p>{{ text }}</p>
+  <div class="hc-ask__btns">
+    <button type="button" class="op-btn op-btn--primary" data-hc-ask-answer="yes">{{ hi("lock") }}<span>Да, сохранять здесь</span></button>
+    <button type="button" class="op-btn op-btn--secondary" data-hc-ask-answer="no">{{ hi("x") }}<span>Нет, не сохранять</span></button>
+  </div>
+  <p class="hc-ask__note">Ответ запомним для всех листов на этом устройстве. Поменять его можно в строке под формой</p>
+  <p class="hc-ask__blank">Хотите заполнить ручкой? {{ blank_btn() }}</p>
+</section>
+{%- endmacro %}
+
+{% macro sub_count() -%}
+<p class="hc-sub__count" data-hc-sub-count hidden></p>
+{%- endmacro %}
+
+{% macro sub_tools() -%}
+<div class="hc-sub" data-hc-sub hidden>
+  <details class="hc-sub__all">
+    <summary>Все части</summary>
+    <ol class="hc-sub__list" data-hc-sub-list></ol>
+  </details>
+  <button type="button" class="op-btn op-btn--link hc-sub__skip" data-hc-sub-skip>Пропустить эту часть</button>
+</div>
+{%- endmacro %}
+
+{% macro preview_open() -%}
+<div class="hc-preview-wrap">
+  <div class="hc-preview__label hc-screen hc-js-only" id="hc-preview-label">
+    <p>{{ hi("file-text") }}<span>Уменьшенная копия листа. Так он будет выглядеть на бумаге</span></p>
+    <p class="hc-preview__hint">Прокрутите копию, чтобы увидеть лист целиком</p>
+  </div>
+  <div class="hc-preview" data-hc-preview tabindex="0" role="region" aria-labelledby="hc-preview-label">
+{%- endmacro %}
+
+{% macro preview_close() -%}
+  </div>
+</div>
+{%- endmacro %}
+
+{% macro box() -%}<span class="hc-box" aria-hidden="true"></span>{%- endmacro %}
+
+{% macro basis(acts) -%}
+{% if acts %}
+<p class="hc-basis hc-screen">Основание:
+  {% for a in acts %}{{ a.title or a.id }}{% if a.url %} (<a href="{{ a.url }}">{{ "официальная публикация" if a.eoNumber else "портал правовой информации" }}</a>){% endif %}{{ "; " if not loop.last }}{% endfor %}
+</p>
+{% endif %}
+{%- endmacro %}
+
+{% macro screen_unverified(reason) -%}
+<p class="hc-unv hc-screen"><span><strong>Не проверено.</strong> {{ reason }}. На лист не попадёт</span></p>
+{%- endmacro %}
+
+{% macro item(i, kind="checklist") -%}
+<li class="hc-item{{ ' is-unverified' if not i.printable }}" data-hc-item="{{ i.id }}"{% if i.branch != "all" %} data-hc-branch="{{ i.branch }}"{% endif %}>
+  {% if i.printable %}{{ box() }}{% else %}<span class="hc-box hc-box--off" aria-hidden="true"></span>{% endif %}
+  <div class="hc-item__body">
+    <p class="hc-item__text{{ ' hc-screen' if not i.printable }}">{{ i.text }}</p>
+    {% if i.detail %}<p class="hc-item__detail{{ ' hc-screen' if not i.printable }}">{{ i.detail }}</p>{% endif %}
+    {% if i.who or i.when %}<p class="hc-item__meta{{ ' hc-screen' if not i.printable }}">{% if i.who %}Кто: {{ i.who }}{% endif %}{% if i.who and i.when %}. {% endif %}{% if i.when %}Когда: {{ i.when }}{% endif %}</p>{% endif %}
+    {% if not i.printable %}{{ screen_unverified(i.reason) }}{% endif %}
+    {{ basis(i.acts) }}
+    {% if i.links %}<p class="hc-links hc-screen">{% for l in i.links %}<a href="{{ xurl(l.repo, l.path, l.get('params')) }}">{{ l.label }}</a>{{ " · " if not loop.last }}{% endfor %}</p>{% endif %}
+  </div>
+</li>
+{%- endmacro %}
+
+{% macro checklist(b, path="") -%}
+{% if b.item_list and not b.items_ok %}<div class="hc-print-only">{{ block_skipped("", path) }}</div>{% endif %}
+<ul class="hc-check" data-hc-block="{{ b.id }}">
+  {% for run in b.item_runs %}
+  {% for i in run.list %}{{ item(i) }}{% endfor %}
+  {% if not run.printable and b.items_ok %}<li class="hc-print-only hc-skipped">{{ skipped(run.list | length, run.after) }}</li>{% endif %}
+  {% endfor %}
+</ul>
+{%- endmacro %}
+
+{% macro quote_screen(b, both=false) -%}
+{% set bad = b.quotes | rejectattr("printable") | list %}
+<div class="hc-qblock{{ ' hc-screen' if bad or not both }}" data-hc-block="{{ b.id }}">
+  {% for q in b.quotes if q.printable %}{{ op.quote(q.text_verbatim, q.source) }}{% endfor %}
+  {% if bad %}
+  <div class="op-status op-status--unverified">
+    {{ hi("circle-help") }}
+    <p><strong class="op-status__word">Не проверено.</strong> {% if b.title %}«{{ b.title }}»{% endif %}{% set points = bad | map(attribute="point") | select | list %}{% if points %} ({{ points | join(", ") }}){% endif %}. {{ bad[0].reason }}. На лист не попадёт{% if bad[0].source.url %}. <a href="{{ bad[0].source.url }}">{{ "Официальная публикация" if bad[0].source.eoNumber else "Портал правовой информации" }}</a>{% endif %}</p>
+  </div>
+  {% endif %}
+</div>
+{%- endmacro %}
+
+{% macro quote_print(b) -%}
+{% for q in b.quotes if q.printable %}
+<figure class="hc-pquote hc-print-keep">
+  <blockquote data-verbatim>{{ q.text_verbatim }}</blockquote>
+  <figcaption>{{ q.source.title }}{% if q.source.point %}, {{ q.source.point }}{% endif %}. Официальная публикация{% if q.source.verified_at %}, сверено {{ q.source.verified_at | ru_date }}{% endif %}</figcaption>
+</figure>
+{% endfor %}
+{%- endmacro %}
+
+{% macro steps(sheet) -%}
+<div class="hc-steps" data-hc-steps>
+{% set items = [] %}
+{% for st in sheet.steps %}{% set _ = items.append((st.title, "#hc-step-" ~ st.id)) %}{% endfor %}
+{{ op.steps(0, items) }}
+<template data-hc-done-icon>{{ icon("check") }}<span class="op-visually-hidden">Готово:</span></template>
+</div>
+{%- endmacro %}
+
+{% macro step_text(sheet, id, extra=[]) -%}
+{% for st in sheet.steps if st.id == id and st.get("text") %}
+<details class="hc-step__more">
+  <summary>{{ hi("info") }}<span>Как заполнять</span></summary>
+  <p class="hc-step__text">{{ st.text }}</p>
+  {% for t in extra %}<p class="hc-step__text">{{ t }}</p>{% endfor %}
+</details>
+{% endfor %}
+{%- endmacro %}
+
+{% macro bar(first=false, last=false) -%}
+<div class="hc-bar">
+  <button type="button" class="op-btn op-btn--secondary" data-hc-prev{% if first %} hidden{% endif %}>Назад</button>
+  {% if not last %}<button type="button" class="op-btn op-btn--primary" data-hc-next>Дальше</button>{% endif %}
+  {% if last %}
+  <button type="button" class="op-btn op-btn--primary" data-hc-print-btn>{{ hi("printer") }}<span>Распечатать или сохранить PDF</span></button>
+  <button type="button" class="op-btn op-btn--primary" data-hc-renew hidden>{{ hi("refresh-cw") }}<span>Проверить и продлить</span></button>
+  {% endif %}
+</div>
+{%- endmacro %}
+
+{% macro sheet_footer(sheet, page_path, validity=true, who=none) -%}
+<footer class="op-sheet-footer hc-pfoot">
+  {% if validity %}<p class="hc-pfoot__valid">Проверено: <span class="hc-fill" data-hc-checked></span>{% if who %}, {{ who.print_label or "кто проверял" }}: <span class="hc-fill" data-hc-out="{{ who.id }}"></span>{% endif %}. Данные верны до: <span class="hc-fill" data-hc-until></span></p>{% endif %}
+  <p>Тексты от {{ site.hc.data_date | ru_date }}, версия листа {{ sheet.version }}. {{ page_addr(page_path) }}{% if sheet.draft != "none" %}. Черновик. {% if sheet.draft in ("legal", "both") %}Текст не проверен юристом в РФ. {% endif %}{% if sheet.draft in ("medical", "both") %}Текст не проверен медиком в РФ. Это не медицинская рекомендация{% endif %}{% endif %}</p>
+</footer>
+{%- endmacro %}
+
+{% macro nojs_note(doc=false) -%}
+<noscript><p class="hc-nojs">{{ hi("printer") }}<span>{{ "Без JavaScript всё показано списком и печатается целиком" if doc else "Без JavaScript лист печатается пустым бланком для ручки" }}. Нажмите Ctrl+P или выберите «Печать» в меню браузера</span></p></noscript>
+{%- endmacro %}
+
+{% macro blank_btn() -%}
+<button type="button" class="op-btn op-btn--link hc-blank-btn hc-js-only" data-hc-blank>{{ hi("printer") }}<span>Распечатать пустой бланк</span></button>
+{%- endmacro %}
+
+{% macro more(sheet) -%}
+<nav class="hc-more hc-screen" aria-labelledby="hc-more-title">
+  <h2 id="hc-more-title">Другие листы</h2>
+  <ul>
+    {% for s in site.hc.order if s.id != sheet.id %}
+    <li><a href="{{ url(s.path) }}">{{ s.title }}</a><span>{{ s.summary }}</span></li>
+    {% endfor %}
+  </ul>
+</nav>
+{%- endmacro %}
+
+{% macro holidays(b) -%}
+<section class="hc-pblock" data-hc-block="{{ b.id }}" data-hc-print="data">
+  <h3 class="hc-pblock__title">{{ b.title }}</h3>
+  <ul class="hc-runs" data-hc-holidays>
+    {% for r in site.hc.upcoming %}
+    {% if r.verified %}<li>{{ r.from | ru_date }} - {{ r.to | ru_date }}, {{ r.days | plural("день", "дня", "дней") }}</li>
+    {% else %}<li class="hc-runs__unv">Календарь на {{ r.to[:4] }} год ещё не утверждён. Даты уточните ближе к праздникам</li>{% endif %}
+    {% else %}
+    <li class="hc-runs__none">{% if site.hc.runs %}В ближайшие 4 месяца длинных выходных нет{% else %}Календарь ещё не подключён. Даты длинных выходных уточните у врача{% endif %}</li>
+    {% endfor %}
+  </ul>
+  {% if b.text %}<p class="hc-pblock__text">{{ b.text }}</p>{% endif %}
+</section>
+{%- endmacro %}
+
+{% macro pblock(b, sheet) -%}
+{% if b.kind == "locked" %}{{ locked(b) }}
+{% elif b.kind == "script" %}{{ script(b) }}
+{% elif b.kind == "quote" %}{{ quote_print(b) }}
+{% elif b.kind in ("numbers", "fields") and b.print is false %}{{ form_only(b) }}
+{% elif b.kind in ("numbers", "fields") %}
+<section class="hc-pblock hc-pblock--{{ b.kind }}" data-hc-block="{{ b.id }}" data-hc-print="own" data-hc-form="{{ 'check' if b.id == 'checked' else 'fill' }}"{% if b.kind == "numbers" %} data-hc-numbers{% endif %}>
+  {% if b.title %}<h3 class="hc-pblock__title">{{ b.title }}</h3>{% endif %}
+  {% for f in b.field_list %}{{ row(f) }}{% endfor %}
+</section>
+{% elif b.kind == "holidays" %}{{ holidays(b) }}
+{% elif b.kind == "text" and b.printable %}
+<section class="hc-pblock" data-hc-block="{{ b.id }}" data-hc-print="own">
+  {% if b.title %}<h3 class="hc-pblock__title">{{ b.title }}</h3>{% endif %}
+  <p class="hc-pblock__text">{{ b.text }}</p>
+</section>
+{% elif b.kind == "checklist" and not b.items_ok %}
+<section class="hc-pblock" data-hc-block="{{ b.id }}" data-hc-print="own">
+  {{ block_skipped(b.title, sheet.path) }}
+</section>
+{% elif b.kind == "checklist" %}
+<section class="hc-pblock" data-hc-block="{{ b.id }}" data-hc-print="own">
+  {% if b.title %}<h3 class="hc-pblock__title">{{ b.title }}</h3>{% endif %}
+  <ul class="hc-check hc-check--paper">
+    {% for run in b.item_runs %}
+    {% if run.printable %}{% for i in run.list %}<li>{{ box() }}<span>{{ i.text }}</span></li>{% endfor %}
+    {% else %}<li class="hc-check__off hc-skipped"><span class="hc-box hc-box--off" aria-hidden="true"></span><span>{{ skipped(run.list | length, run.after) }}</span></li>{% endif %}
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+{%- endmacro %}
+
+{% macro excluded_notes(sheet) -%}
+{% set ns = namespace(any=false) %}
+<div class="hc-notes">
+  {% for sec in sheet.sections_view %}{% for b in sec.blocks %}
+  {% if b.kind == "quote" and not b.printable %}{% set ns.any = true %}{{ quote_screen(b) }}
+  {% elif b.kind == "checklist" %}
+  {% for i in b.item_list if not i.printable %}{% set ns.any = true %}
+  <div class="op-status op-status--unverified">{{ hi("circle-help") }}<p><strong class="op-status__word">Не проверено.</strong> «{{ i.text }}». {{ i.reason }}. На листе вместо пункта будет строка «смотрите на экране»</p></div>
+  {% endfor %}
+  {% endif %}
+  {% endfor %}{% endfor %}
+</div>
+{%- endmacro %}
+
+{% macro qr_block(b, size="a4") -%}
+<figure class="hc-qr hc-qr--{{ size }}" data-hc-qr-box="{{ size }}" data-hc-block="{{ b.id }}" data-hc-print="own" hidden>
+  <div class="hc-qr__code" data-hc-qr-code></div>
+  <figcaption class="hc-qr__cap">{{ b.text }}</figcaption>
+</figure>
+{%- endmacro %}
+
+{% macro indication(g, intro=none) -%}
+{% if g.printable %}
+<li class="hc-ind">
+  <figure class="op-quote">
+    <blockquote data-verbatim>{% if intro %}<p class="hc-ind__intro">{{ intro }}:</p>{% endif %}{% for n in g.rows %}<p>{{ n.text_verbatim }}</p>{% endfor %}</blockquote>
+    <figcaption>{{ op.cite(g.source) }}</figcaption>
+  </figure>
+</li>
+{% else %}
+{% for n in g.rows %}
+<li class="hc-ind is-unverified hc-screen">
+  <div class="op-status op-status--unverified">
+    {{ hi("circle-help") }}
+    <p><strong class="op-status__word">Не проверено.</strong> {{ n.source.point }}. {{ n.reason }}. Пока текст не сверен, смотрите его в официальной публикации{% if n.pdf_page %}, страница {{ n.pdf_page }}{% endif %}{% if n.source.url %}. <a href="{{ n.source.url }}">Официальная публикация</a>{% endif %}</p>
+  </div>
+</li>
+{% endfor %}
+{% endif %}
+{%- endmacro %}
+
+{% macro indications(points, path, intro=none) -%}
+{% set ns = namespace(run=0, ok=false, any_ok=(points | selectattr("printable") | list | length) > 0) %}
+<ul class="hc-inds">
+{% for g in points %}
+{{ indication(g, intro.title if (intro and intro.printable and loop.first) else none) }}
+{% if g.printable %}{% set ns.ok = true %}{% else %}{% set ns.run = ns.run + (g.rows | length) %}{% endif %}
+{% if not g.printable and (loop.last or loop.nextitem.printable) %}
+<li class="hc-print-only hc-skipped">{% if ns.any_ok %}{{ skipped(ns.run, ns.ok) }}{% else %}Пункты ещё не проверены, смотрите их на экране: {{ page_addr(path) }}{% endif %}</li>
+{% set ns.run = 0 %}
+{% endif %}
+{% else %}
+<li><p>Пунктов для этой группы пока нет в снимке</p></li>
+{% endfor %}
+</ul>
+{%- endmacro %}
+
+{% macro paper_draft(sheet) -%}
+{% if sheet.draft != "none" %}<p class="hc-paper__draft">Черновик: текст не проверен {{ {"legal": "юристом", "medical": "медиком", "both": "юристом и медиком"}[sheet.draft] }} в РФ</p>{% endif %}
+{%- endmacro %}
+
+{% macro print_head(sheet) -%}
+<header class="hc-print-head hc-print-only">
+  <p class="hc-paper__kicker">openpalliative. Листы для дома</p>
+  <p class="hc-print-head__title">{{ sheet.title }}</p>
+  {{ paper_draft(sheet) }}
+</header>
+{%- endmacro %}
+
+{% macro print_bar(label="Распечатать или сохранить PDF") -%}
+<div class="hc-printbar hc-screen hc-js-only">
+  <button type="button" class="op-btn op-btn--primary" data-hc-print-btn>{{ hi("printer") }}<span>{{ label }}</span></button>
+</div>
+{%- endmacro %}

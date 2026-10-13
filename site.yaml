@@ -1,0 +1,21 @@
+repo: home-care-kit
+title: Листы для дома
+tagline: Карта на ночь и праздники, лист для скорой, чек-лист выписки, что даёт заключение и что подписать заранее. Заполните и распечатайте на обычном принтере
+prefix: hc
+port: 8704
+base: /home-care-kit/
+site_url: https://openpalliative.github.io
+lang: ru
+pwa: true
+stale_after_days: 90
+draft_default: none
+github: https://github.com/openpalliative/home-care-kit
+nav:
+  - title: Все листы
+    path: ""
+  - title: Ночь и праздники
+    path: night/
+  - title: Для скорой
+    path: emergency/
+  - title: Выписка
+    path: discharge/

@@ -1,0 +1,42 @@
+{% extends "hc/layout.html.j2" %}
+{% from "partials/hi.html.j2" import hi %}
+{% import "op/macros.html.j2" as op with context %}
+{% set crumb = none %}
+{% block title %}{{ site.title }}{% endblock %}
+{% block description %}{{ site.tagline }}{% endblock %}
+{% block page_head %}<link rel="stylesheet" href="{{ url('assets/css/hc-pages.css') }}">
+<script type="module" src="{{ url('assets/js/hc-home.js') }}"></script>{% endblock %}
+{% block content %}
+<div class="hc-home">
+  <h1>Листы для дома</h1>
+  <p class="op-lead">Заполните поля и распечатайте на обычном принтере. Повесьте лист на видное место или положите в папку с документами</p>
+  <h2 class="hc-home__q">Какой лист распечатать?</h2>
+  <ul class="hc-cards">
+    {% for s in site.hc.order %}
+    {% set e = site.hc.entries.get(s.id) %}
+    <li class="op-card op-card--link hc-card{{ ' hc-card--first' if loop.first }}">
+      <div class="op-card__body">
+        <h3 class="op-card__title"><a href="{{ url(s.path) }}">{{ s.title }}</a></h3>
+        <p class="op-card__text">{{ (e.summary if e else s.summary) }}</p>
+        <p class="hc-card__meta">{{ hi("printer") }}<span>{% for p in s.paper %}{% if p == "a4" and s.id == "conclusion" and site.hc.indications_stub %}{{ site.hc.stub_pages | plural("лист", "листа", "листов") }} A4{% elif p == "a4" %}{{ s.print_pages.get("a4", 1) | plural("лист", "листа", "листов") }} A4{% if s.id == "conclusion" %} на одно заболевание{% endif %}{% else %}карточка в кошелёк{% endif %}{{ ", " if not loop.last }}{% endfor %}</span>{{ hi("clock") }}<span>{{ s.minutes | plural("минута", "минуты", "минут") }}</span></p>
+        {% if e %}
+        <ul class="op-badges">
+          {% if e.maturity == "demo" %}<li class="op-badge">{{ hi("info") }}<span>Демо</span></li>{% endif %}
+          {% if e.offline %}<li class="op-badge">{{ hi("wifi-off") }}<span>Работает без интернета</span></li>{% endif %}
+        </ul>
+        {% endif %}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  <div class="hc-home__privacy">
+    {{ hi("lock") }}
+    <p><strong>Ничего не отправляется в интернет.</strong> Заполненные листы хранятся только на этом устройстве, и только если вы разрешили. Тексты листов - черновики: их ещё не проверили юрист и медик в РФ</p>
+  </div>
+  <ul class="hc-home__links">
+    <li><a href="{{ url('saved/') }}">Что сохранено на этом устройстве</a></li>
+    <li><a href="{{ url('data/') }}">Откуда данные и что ещё не проверено</a></li>
+  </ul>
+  {{ op.data_date(site.hc.data_date, 90, true, "Тексты листов от") }}
+</div>
+{% endblock %}

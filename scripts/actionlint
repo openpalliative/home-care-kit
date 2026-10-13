@@ -1,0 +1,6 @@
+#!/bin/sh
+set -eu
+cd "$(dirname "$0")/.."
+sh scripts/tools/install >/dev/null
+if [ $# -eq 0 ]; then set -- .github/workflows/*.yml; fi
+scripts/tools/bin/actionlint -shellcheck scripts/tools/bin/shellcheck "$@"

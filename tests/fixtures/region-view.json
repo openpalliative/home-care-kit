@@ -1,0 +1,81 @@
+{
+  "format": "openpalliative-dataset/1",
+  "dataset": "region-view",
+  "repo": "home-care-kit",
+  "schema_version": "1.0.0",
+  "version": "2026.10.11",
+  "generated_at": "2026-10-11T12:00:00Z",
+  "data_date": "2026-10-11",
+  "stale_after_days": 90,
+  "license": "pal-directory",
+  "source": [
+    {
+      "id": "pal-directory-snapshot",
+      "title": "Снимок pal-directory (пример на выдуманных данных)",
+      "url": "https://openpalliative.github.io/pal-directory/data/v1/index.json"
+    }
+  ],
+  "content_sha256": "9a0d30d8bd2db7edb6f46bb57b2c86e6df5fc474ed66d68df4bc3de74068dfb6",
+  "counts": {
+    "items": 3,
+    "unverified": 3,
+    "excluded": 0
+  },
+  "items": [
+    {
+      "id": "RU-KGD",
+      "name": "Калининградская область",
+      "verified": false,
+      "verified_at": null,
+      "lines": [
+        {
+          "id": "kgd-pain-demo",
+          "role": "pain",
+          "label": "Линия по обезболиванию (пример)",
+          "phone": "+7 000 000-00-01",
+          "hours": "круглосуточно",
+          "is_24x7": true,
+          "other_org": true,
+          "printable": false,
+          "demo": true,
+          "verified": false,
+          "verified_at": null,
+          "source_ref": "pal-directory-snapshot",
+          "source_title": "Пример на выдуманных данных",
+          "source_date": "2026-03-03"
+        }
+      ]
+    },
+    {
+      "id": "RU-MOW",
+      "name": "Москва",
+      "verified": false,
+      "verified_at": null,
+      "lines": [
+        {
+          "id": "mow-pain-demo",
+          "role": "pain",
+          "label": "Линия по обезболиванию (пример, проверенный)",
+          "phone": "+7 000 000-00-02",
+          "hours": "пн-пт 9-18",
+          "is_24x7": false,
+          "other_org": true,
+          "printable": true,
+          "demo": true,
+          "verified": true,
+          "verified_at": "2026-10-01",
+          "source_ref": "pal-directory-snapshot",
+          "source_title": "Пример на выдуманных данных",
+          "source_date": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": "RU-SPE",
+      "name": "Санкт-Петербург",
+      "verified": false,
+      "verified_at": null,
+      "lines": []
+    }
+  ]
+}

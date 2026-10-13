@@ -1,0 +1,35 @@
+#!/bin/sh
+set -eu
+cd "$(dirname "$0")/.."
+FROM="${1:-local}"
+mkdir -p _reports
+uv run python -m opsite sync-data --from "$FROM" | tee _reports/sync.txt
+CHANGED=""
+if [ -d .git ]; then
+  CHANGED="$(git status --porcelain -- vendor deps.yaml || true)"
+fi
+LABEL="review:data"
+if printf '%s\n' "$CHANGED" | grep -q "vendor/pal-norms"; then
+  LABEL="review:legal"
+fi
+{
+  echo "Обновились снимки соседей. Перед слиянием откройте листы и проверьте, что номера, нормы и календарь показаны верно"
+  echo
+  echo "Вывод sync-data:"
+  echo
+  echo '```'
+  cat _reports/sync.txt
+  echo '```'
+  echo
+  echo "Изменённые файлы:"
+  echo
+  echo '```'
+  printf '%s\n' "${CHANGED:-нет данных git}"
+  echo '```'
+  if printf '%s\n' "$CHANGED" | grep -q "vendor/pal-norms"; then
+    echo
+    echo "Поменялись нормы или календарь: нужен взгляд юриста"
+  fi
+} > _reports/pr-body.md
+echo "$LABEL" > _reports/pr-label.txt
+echo "Метка PR: $LABEL"

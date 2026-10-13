@@ -1,0 +1,12 @@
+[
+  {"name": "home", "path": "", "nojs": true},
+  {"name": "night-demo", "path": "night/?demo=1", "print_pages": 2},
+  {"name": "night-blank", "path": "night/", "nojs": true, "print_pages": 2},
+  {"name": "emergency-demo", "path": "emergency/?demo=1", "print_pages": 1},
+  {"name": "emergency-blank", "path": "emergency/", "nojs": true, "print_pages": 1},
+  {"name": "discharge", "path": "discharge/", "nojs": true, "print_pages": 2},
+  {"name": "conclusion", "path": "conclusion/", "nojs": true},
+  {"name": "ahead", "path": "ahead/", "nojs": true},
+  {"name": "data", "path": "data/", "nojs": true},
+  {"name": "saved", "path": "saved/"}
+]

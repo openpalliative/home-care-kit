@@ -1,0 +1,19 @@
+{
+  "valid_until": [
+    { "name": "проверка летом, проверен только текущий год", "in": { "checkedAt": "2026-08-01", "verifiedYears": [2026] }, "out": "2026-12-31" },
+    { "name": "проверка в декабре, проверены два года", "in": { "checkedAt": "2026-12-20", "verifiedYears": [2026, 2027] }, "out": "2027-06-21" },
+    { "name": "проверенных лет нет", "in": { "checkedAt": "2027-03-01", "verifiedYears": [] }, "out": "2027-08-31" },
+    { "name": "проверенных лет нет, проверка осенью", "in": { "checkedAt": "2026-10-11", "verifiedYears": [] }, "out": "2026-12-31" },
+    { "name": "номер региона обрезает срок", "in": { "checkedAt": "2026-08-01", "verifiedYears": [2026, 2027], "lineDates": ["2026-01-01"] }, "out": "2027-01-01" },
+    { "name": "без даты проверки срока нет", "in": { "checkedAt": "", "verifiedYears": [2026] }, "out": null }
+  ],
+  "watermark": [
+    { "checkedAt": "2026-07-01", "today": "2026-09-29", "out": false },
+    { "checkedAt": "2026-07-01", "today": "2026-09-30", "out": true },
+    { "checkedAt": "", "today": "2026-09-30", "out": true }
+  ],
+  "expired": [
+    { "until": "2026-12-31", "today": "2026-12-31", "out": false },
+    { "until": "2026-12-31", "today": "2027-01-01", "out": true }
+  ]
+}

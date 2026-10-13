@@ -1,0 +1,115 @@
+{
+ "repo": "pal-norms",
+ "generated_at": "2026-10-13T06:32:31Z",
+ "opsite_version": "0.2.16",
+ "datasets": [
+  {
+   "name": "acts",
+   "path": "acts.json",
+   "schema": "acts.schema.json",
+   "schema_version": "1.1.0",
+   "version": "2026.10.11",
+   "data_date": "2026-10-11",
+   "content_sha256": "157fd6f370c077d379560d119a161a308ff742040f4aef99259ee7da527f8a04",
+   "bytes": 138825,
+   "items": 49,
+   "sha256": "d51b02e838e85c611c4740a0240ff45df0b55e0e7eee06cd1319d5e070112380"
+  },
+  {
+   "name": "calendar",
+   "path": "calendar.json",
+   "schema": "calendar.schema.json",
+   "schema_version": "1.1.0",
+   "version": "2026.10.11",
+   "data_date": "2026-10-11",
+   "content_sha256": "3d018c8d06d6be8f6958ebf6dc59aa3b60764b9b3f9f86f832f758f897c0c976",
+   "bytes": 123314,
+   "items": 5,
+   "sha256": "2fac64205fbe713d828db41ac8674d03e5c8cd7cf7251d89c5264a8528518dad"
+  },
+  {
+   "name": "changes",
+   "path": "changes.json",
+   "schema": "changes.schema.json",
+   "schema_version": "1.0.0",
+   "version": "2026.10.11",
+   "data_date": "2026-10-11",
+   "content_sha256": "9ca5b032738bf2d2685fca9da8f06f28c9107e78176c401ec8d236c63c4e4bea",
+   "bytes": 19169,
+   "items": 10,
+   "sha256": "13595cac9a85540cfd650b58ed148261a47183d47715336657610c59db130869"
+  },
+  {
+   "name": "deadline-rules",
+   "path": "deadline-rules.json",
+   "schema": "deadline-rules.schema.json",
+   "schema_version": "1.2.0",
+   "version": "2026.10.11",
+   "data_date": "2026-10-11",
+   "content_sha256": "ee3903bed7add904f7654f77d314be9da4d5718a09c6f697fa5273dba0802d2d",
+   "bytes": 33908,
+   "items": 21,
+   "sha256": "666e41d4261da30e3e67469b18a7e4634e3630e278fc2fa70e038c71dd54390b"
+  },
+  {
+   "name": "entrypoints",
+   "path": "entrypoints.json",
+   "schema": "entrypoints.schema.json",
+   "schema_version": "1.0.0",
+   "version": "2026.10.11",
+   "data_date": "2026-10-11",
+   "content_sha256": "ea4cd0f15fdcfeca3a9e01128ddc71cb8c6d325dbf534f6d2573eac06a5c700a",
+   "bytes": 4432,
+   "items": 8,
+   "sha256": "e40baf7c7a313500d6053ec35763fa4f1143a507d3df82463927dba26b5787ad"
+  },
+  {
+   "name": "escalation",
+   "path": "escalation.json",
+   "schema": "escalation.schema.json",
+   "schema_version": "1.1.0",
+   "version": "2026.10.11",
+   "data_date": "2026-10-11",
+   "content_sha256": "fe139d64e598f1093810f2f2f4db4959a5761667845e931414105e479528c963",
+   "bytes": 6739,
+   "items": 4,
+   "sha256": "ea495e053e421ed157b5daac10180f2332ae16a4d8cbca6ad9486582e00c2663"
+  },
+  {
+   "name": "indications",
+   "path": "indications.json",
+   "schema": "indications.schema.json",
+   "schema_version": "1.2.0",
+   "version": "2026.10.11",
+   "data_date": "2026-10-11",
+   "content_sha256": "86152aaecede32917190b2eea3c73bbc2832c3cf427a5e99c305c045d900a960",
+   "bytes": 107552,
+   "items": 74,
+   "sha256": "f5e91c968141b2ce79cbe8f86bd9679510c92b25ce97d1fbbadc217a31ba10ca"
+  },
+  {
+   "name": "lint-rules",
+   "path": "lint-rules.json",
+   "schema": "lint-rules.schema.json",
+   "schema_version": "1.0.0",
+   "version": "2026.10.11",
+   "data_date": "2026-10-11",
+   "content_sha256": "e1388376c2f258e18c901af55d26969060633c62715d6d4355aad7a1e119d29c",
+   "bytes": 13516,
+   "items": 10,
+   "sha256": "04a6dc75f070cf45c9fd1e5ee10139092e46bebc271725629f45ae5e2765d83f"
+  },
+  {
+   "name": "quotes",
+   "path": "quotes.json",
+   "schema": "quotes.schema.json",
+   "schema_version": "1.2.0",
+   "version": "2026.10.11",
+   "data_date": "2026-10-11",
+   "content_sha256": "e87da78d82a78382e54c2fb48298bd5cccd9f8f073ffdaa1b7f0c046a3337325",
+   "bytes": 235684,
+   "items": 106,
+   "sha256": "57afe37344d44ff2f2d36e4047296dcf19d0be292f6f2bb8667409dce88293ec"
+  }
+ ]
+}

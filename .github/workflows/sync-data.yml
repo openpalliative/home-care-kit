@@ -1,0 +1,64 @@
+name: sync-data
+on:
+  schedule: [{ cron: "43 5 * * 2" }]
+  workflow_dispatch:
+permissions: {}
+concurrency: { group: sync-data, cancel-in-progress: false }
+jobs:
+  sync:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions: { contents: write, pull-requests: write, issues: write, actions: write }
+    env: { OP_TARGET: pages }
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { persist-credentials: false }
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with: { version: "0.11.7", enable-cache: false }
+      - run: uv sync --frozen
+      - id: sync
+        run: |
+          sh scripts/sync-report pages
+          echo "label=$(cat _reports/pr-label.txt)" >> "$GITHUB_OUTPUT"
+          echo "date=$(date -u +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
+      - id: verify
+        continue-on-error: true
+        run: |
+          uv run pytest -q
+          uv run python -m opsite build
+          uv run python -m opsite check --ci
+          uv run python scripts/indications_gate.py
+      - if: steps.verify.outcome != 'success'
+        run: printf '\nСборка или проверки с новыми снимками не прошли, смотрите лог запуска\n' >> _reports/pr-body.md
+      - id: pr
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        with:
+          branch: sync/${{ steps.sync.outputs.date }}
+          delete-branch: true
+          title: "data: снимки соседей ${{ steps.sync.outputs.date }}"
+          commit-message: "data: снимки соседей ${{ steps.sync.outputs.date }}"
+          body-path: _reports/pr-body.md
+          labels: ${{ steps.sync.outputs.label }}
+          add-paths: |
+            vendor/**
+            deps.yaml
+      - name: checks on the pull request
+        if: steps.pr.outputs.pull-request-operation == 'created' || steps.pr.outputs.pull-request-operation == 'updated'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          BRANCH: ${{ steps.pr.outputs.pull-request-branch }}
+        run: gh workflow run checks.yml --ref "$BRANCH"
+      - name: audit
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: uv run python -m pipeline.audit --open-issues
+      - name: keepalive
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X PUT "repos/$GITHUB_REPOSITORY/actions/workflows/sync-data.yml/enable"
+      - if: steps.verify.outcome != 'success'
+        run: exit 1

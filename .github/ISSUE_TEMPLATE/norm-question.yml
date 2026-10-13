@@ -1,0 +1,48 @@
+name: Вопрос по норме
+description: Пересказ нормы на листе кажется неточным, устаревшим или непонятно, на что он опирается
+title: "Норма: "
+labels: ["review:legal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Это сообщение увидят все
+
+        **Не пишите ФИО, диагнозы, адреса, телефоны и номера документов. Не прикладывайте выписки, заключения, рецепты, ответы больниц и ведомств, даже с закрашенными данными. Не рассказывайте свою историю так, что человека можно узнать**
+
+        Здесь не консультируют по конкретному случаю. Мы можем поправить текст листа, если он расходится с официальной публикацией. Если ошибка в самой цитате нормы, пишите в справочник норм (pal-norms), ссылка есть на странице выбора формы
+  - type: input
+    id: page
+    attributes:
+      label: Адрес страницы
+      description: Скопируйте из строки браузера
+      placeholder: https://openpalliative.github.io/home-care-kit/discharge/
+    validations:
+      required: true
+  - type: textarea
+    id: text
+    attributes:
+      label: Какой пункт листа
+      description: Скопируйте текст пункта
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Что смущает
+      description: Своими словами. Если знаете, как правильно, напишите
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Ссылка на официальную публикацию
+      description: Портал официального опубликования publication.pravo.gov.ru. Если есть, укажите страницу скана
+      placeholder: http://publication.pravo.gov.ru/document/...
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Проверьте перед отправкой
+      options:
+        - label: В сообщении нет ФИО, диагнозов, адресов, телефонов, номеров документов и сканов
+          required: true

@@ -1,0 +1,367 @@
+id: night
+title: Карта на ночь и праздники
+summary: Свои номера на ночь и выходные, что сказать диспетчеру скорой, папка с документами на случай
+path: night/
+minutes: 5
+paper: [a4]
+print_pages:
+  a4: 2
+storage: save
+validity:
+  rule: recheck
+  recheck_days: 183
+  line_days: 365
+draft: both
+version: 2026.10.13
+verified: false
+verified_at:
+review: {needs: both, reviewed_by: , reviewed_at: }
+situations: [night-pain, dying, who-to-call, prepare]
+steps:
+  - id: fill
+    title: Заполнить
+    text: Впишите номера, по которым звоните днём и ночью. Пустое поле на листе останется линией для ручки
+  - id: check
+    title: Проверить
+    text: Позвоните по каждому номеру или сверьте с документами. После этого у листа появится срок годности
+  - id: print
+    title: Распечатать или сохранить PDF
+    text: Две стороны одного листа или два листа. Первую сторону повесьте на холодильник, вторую положите в папку с документами
+fields:
+  - id: person_name
+    label: Как зовут человека, за которым вы ухаживаете
+    hint: Чтобы диспетчер и врач обращались по имени. Можно не заполнять
+    type: text
+    max_len: 40
+    autocomplete: "off"
+    demo: Анна Петровна
+  - id: address
+    label: Адрес для скорой
+    hint: Город, улица, дом, квартира, подъезд, этаж, код домофона
+    type: textarea
+    max_len: 140
+    autocomplete: street-address
+    blank_lines: 2
+    demo: г. Примерный, ул. Садовая, д. 1, кв. 2, подъезд 1, этаж 3, домофон 2В
+  - id: vk_date
+    label: Дата заключения врачебной комиссии о паллиативной помощи
+    hint: Дата есть на самом заключении. Если заключения пока нет, оставьте пустым
+    type: date
+    max_len: 10
+    demo: "2026-09-01"
+  - id: hospice_name
+    label: Выездная служба паллиативной помощи, название
+    hint: Как называется служба, которая приходит домой
+    type: text
+    max_len: 60
+    demo: Выездная служба (пример)
+  - id: hospice_phone
+    label: Выездная служба, телефон
+    type: tel
+    max_len: 32
+    autocomplete: "off"
+    demo: +7 000 000-00-11
+  - id: hospice_hours
+    label: Выездная служба, часы работы
+    hint: Например, круглосуточно или пн-пт 9-18. Спросите у службы, кто отвечает ночью и в праздники
+    type: text
+    max_len: 40
+    demo: пн-пт 9-18
+  - id: cabinet_phone
+    label: Кабинет паллиативной помощи в поликлинике, телефон
+    type: tel
+    max_len: 32
+    autocomplete: "off"
+    demo: +7 000 000-00-12
+  - id: cabinet_hours
+    label: Кабинет, часы работы
+    type: text
+    max_len: 40
+    demo: пн-пт 8-16
+  - id: region_line
+    label: Линия по обезболиванию в вашем регионе
+    hint: Если такой линии нет или номер не проверен, оставьте пустым. Номер из нашего списка попадёт на лист только после того, как вы по нему позвоните
+    type: tel
+    max_len: 32
+    autocomplete: "off"
+    suggest: region
+    suggest_id: pain
+    confirm: true
+  - id: hotline
+    label: Горячая линия помощи неизлечимо больным людям
+    hint: Это сторонняя линия, мы с ней не связаны. На лист номер попадёт после того, как вы по нему позвоните
+    type: tel
+    max_len: 32
+    autocomplete: "off"
+    suggest: now
+    suggest_id: hotline
+    confirm: true
+  - id: pharmacy
+    label: Аптека, где выдают обезболивающие по рецепту, адрес
+    hint: Спросите у врача, в какую аптеку идти с рецептом
+    type: text
+    max_len: 80
+    demo: ул. Садовая, д. 5
+  - id: pharmacy_phone
+    label: Аптека, телефон
+    type: tel
+    max_len: 32
+    autocomplete: "off"
+    demo: +7 000 000-00-13
+  - id: pharmacy_hours
+    label: Аптека, часы работы
+    hint: Узнайте, работает ли аптека в праздники
+    type: text
+    max_len: 40
+    demo: ежедневно 8-20
+  - id: next_rx
+    label: Когда нужен следующий рецепт
+    hint: Спросите у врача, сколько действует рецепт и когда приходить за новым
+    type: date
+    max_len: 10
+    demo: "2026-12-28"
+  - id: folder_place
+    label: Где лежит папка с документами
+    hint: Чтобы её нашёл любой, кто окажется рядом
+    type: text
+    max_len: 80
+    demo: Шкаф в прихожей, верхняя полка, синяя папка
+  - id: contact_day_name
+    label: Кого звать днём, имя
+    type: text
+    max_len: 40
+    demo: Ольга, дочь
+  - id: contact_day_phone
+    label: Кого звать днём, телефон
+    type: tel
+    max_len: 32
+    autocomplete: "off"
+    demo: +7 000 000-00-14
+  - id: contact_night_name
+    label: Кого звать ночью, имя
+    type: text
+    max_len: 40
+    demo: Сергей, сосед
+  - id: contact_night_phone
+    label: Кого звать ночью, телефон
+    type: tel
+    max_len: 32
+    autocomplete: "off"
+    demo: +7 000 000-00-15
+  - id: who_certifies
+    label: Кто приходит ночью и в выходные, если человек умрёт дома
+    hint: Спросите в поликлинике или выездной службе заранее и запишите ответ своими словами
+    type: textarea
+    max_len: 140
+    blank_lines: 2
+  - id: checked_by
+    label: Кто проверял номера
+    type: text
+    max_len: 40
+    demo: Ольга
+sections:
+  - id: side-night
+    title: Ночь и праздники
+    side: 1
+    blocks:
+      - id: life-threat
+        kind: locked
+        text: При угрозе жизни звоните 103 или 112
+        now_ids: [ambulance, emergency]
+        print: true
+        verified: true
+        verified_at: 2026-10-11
+        source_ref: now-yaml
+        review: {needs: none, reviewed_by: , reviewed_at: }
+      - id: pain
+        kind: script
+        title: Сильная боль
+        text: Звоните 103. Скажите диспетчеру
+        lines:
+          - Человек получает паллиативную помощь
+          - У него сильная боль, обычное обезболивание не помогает
+          - "Адрес: {address}"
+          - Есть заключение врачебной комиссии о паллиативной помощи от {vk_date}
+        field_ids: [address, vk_date]
+        print: true
+        verified: false
+        verified_at:
+        review: {needs: medical, reviewed_by: , reviewed_at: }
+      - id: ambulance-norm
+        kind: quote
+        title: Должна ли скорая обезболить
+        text: Мы ищем официальный текст порядка скорой помощи. Пока он не сверен, этот пункт на лист не попадает
+        norm_ids: [388n]
+        quote_refs:
+          - quote_id: 388n-p11
+        print: true
+        verified: false
+        verified_at:
+        review: {needs: both, reviewed_by: , reviewed_at: }
+      - id: numbers
+        kind: numbers
+        title: Кроме 103
+        field_ids: [hospice_name, hospice_phone, hospice_hours, cabinet_phone, cabinet_hours, region_line, hotline, pharmacy, pharmacy_phone, pharmacy_hours]
+        now_ids: [hotline]
+        region_roles: [pain]
+        links:
+          - label: Откуда номера по регионам
+            repo: pal-directory
+            path: ""
+        print: true
+        verified: true
+        verified_at: 2026-10-11
+        review: {needs: none, reviewed_by: , reviewed_at: }
+      - id: rx
+        kind: fields
+        title: Рецепт
+        field_ids: [next_rx]
+        print: true
+        verified: true
+        verified_at: 2026-10-11
+        review: {needs: none, reviewed_by: , reviewed_at: }
+      - id: holidays
+        kind: holidays
+        title: Ближайшие длинные выходные
+        text: Перед ними заранее спросите у врача, как получить рецепт и обезболивание на эти дни
+        links:
+          - label: Календарь выходных
+            repo: pal-norms
+            path: calendar/
+        print: true
+        verified: true
+        verified_at: 2026-10-11
+        review: {needs: none, reviewed_by: , reviewed_at: }
+      - id: dying-short
+        kind: text
+        title: Если человек умирает дома
+        text: Позвоните в выездную службу. Что лежит в папке с документами и кого звать, написано на обороте
+        print: true
+        verified: true
+        verified_at: 2026-10-11
+        review: {needs: both, reviewed_by: , reviewed_at: }
+      - id: who
+        kind: fields
+        title: Для кого лист
+        field_ids: [person_name, vk_date]
+        print: true
+        verified: true
+        verified_at: 2026-10-11
+        review: {needs: none, reviewed_by: , reviewed_at: }
+      - id: who-address
+        kind: fields
+        title: Для кого лист
+        text: Адрес печатается один раз, в словах для диспетчера
+        field_ids: [address]
+        screen: true
+        print: false
+        verified: true
+        verified_at: 2026-10-11
+        review: {needs: none, reviewed_by: , reviewed_at: }
+  - id: side-folder
+    title: Папка на случай
+    side: 2
+    anchor: folder
+    blocks:
+      - id: folder
+        kind: fields
+        title: Где папка
+        field_ids: [folder_place]
+        print: true
+        verified: true
+        verified_at: 2026-10-11
+        review: {needs: none, reviewed_by: , reviewed_at: }
+      - id: docs
+        kind: checklist
+        title: Что лежит в папке
+        text: Отметьте ручкой, что уже положили
+        print: true
+        verified: true
+        verified_at: 2026-10-11
+        review: {needs: legal, reviewed_by: , reviewed_at: }
+        items:
+          - id: doc-vk
+            text: Заключение врачебной комиссии о паллиативной помощи
+            verified: true
+            verified_at: 2026-10-11
+            review: {needs: legal, reviewed_by: , reviewed_at: }
+          - id: doc-discharge
+            text: Выписки из больницы
+            verified: true
+            verified_at: 2026-10-11
+            review: {needs: legal, reviewed_by: , reviewed_at: }
+          - id: doc-refusal
+            text: Письменный отказ от госпитализации, если человек его подписывал
+            verified: true
+            verified_at: 2026-10-11
+            review: {needs: legal, reviewed_by: , reviewed_at: }
+          - id: doc-passport
+            text: Паспорт
+            verified: true
+            verified_at: 2026-10-11
+            review: {needs: legal, reviewed_by: , reviewed_at: }
+          - id: doc-oms
+            text: Полис ОМС
+            verified: true
+            verified_at: 2026-10-11
+            review: {needs: legal, reviewed_by: , reviewed_at: }
+          - id: doc-snils
+            text: СНИЛС
+            verified: true
+            verified_at: 2026-10-11
+            review: {needs: legal, reviewed_by: , reviewed_at: }
+          - id: doc-poa
+            text: Доверенность, если она есть
+            verified: true
+            verified_at: 2026-10-11
+            review: {needs: legal, reviewed_by: , reviewed_at: }
+          - id: doc-rx
+            text: Назначения врача и рецепты
+            verified: true
+            verified_at: 2026-10-11
+            review: {needs: legal, reviewed_by: , reviewed_at: }
+      - id: contacts
+        kind: fields
+        title: Кого звать
+        field_ids: [contact_day_name, contact_day_phone, contact_night_name, contact_night_phone]
+        print: true
+        verified: true
+        verified_at: 2026-10-11
+        review: {needs: none, reviewed_by: , reviewed_at: }
+      - id: ask-clinic
+        kind: fields
+        title: Спросите в поликлинике заранее
+        field_ids: [who_certifies]
+        print: true
+        verified: true
+        verified_at: 2026-10-11
+        review: {needs: both, reviewed_by: , reviewed_at: }
+      - id: first-48
+        kind: checklist
+        title: Первые 48 часов
+        print: true
+        verified: false
+        verified_at:
+        review: {needs: legal, reviewed_by: , reviewed_at: }
+        items:
+          - id: poa-ends
+            text: Доверенность прекращает действие со смертью человека, который её выдал
+            norm_ids: [gk-188]
+            quote_refs:
+              - quote_id: gk-188-p1
+            verified: false
+            verified_at:
+            review: {needs: legal, reviewed_by: , reviewed_at: }
+          - id: card
+            text: Не снимайте деньги с карты умершего, даже если знаете пин-код. Спросите юриста или нотариуса, как быть с деньгами
+            verified: false
+            verified_at:
+            review: {needs: legal, reviewed_by: , reviewed_at: }
+          - id: funeral-money
+            text: Часть денег со счёта умершего можно получить на похороны через нотариуса. Спросите нотариуса, какие документы взять
+            norm_ids: [gk-1174]
+            quote_refs:
+              - quote_id: gk-1174-p3
+            verified: false
+            verified_at:
+            review: {needs: legal, reviewed_by: , reviewed_at: }

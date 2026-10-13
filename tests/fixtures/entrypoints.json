@@ -1,0 +1,119 @@
+{
+  "format": "openpalliative-dataset/1",
+  "dataset": "entrypoints",
+  "repo": "home-care-kit",
+  "schema_version": "1.0.0",
+  "version": "2026.10.11",
+  "generated_at": "2026-10-11T12:00:00Z",
+  "data_date": "2026-10-11",
+  "stale_after_days": 90,
+  "license": "CC-BY-SA-4.0",
+  "source": [
+    {
+      "id": "home-care-kit-texts",
+      "title": "Тексты листов openpalliative, черновик до проверки юристом и медиком в РФ",
+      "url": "https://github.com/openpalliative/home-care-kit/tree/main/data/sheets",
+      "license": "CC-BY-SA-4.0"
+    }
+  ],
+  "content_sha256": "b403e9b836fb1fe850617cd50c7495dc7dc5c9be1c89582aa79324da9c37e1f7",
+  "counts": {
+    "items": 5,
+    "unverified": 5,
+    "excluded": 0
+  },
+  "items": [
+    {
+      "id": "night",
+      "title": "Карта на ночь и праздники",
+      "summary": "Свои номера на ночь и выходные, что сказать диспетчеру скорой, папка с документами на случай",
+      "path": "night/",
+      "audience": [
+        "family"
+      ],
+      "situations": [
+        "night-pain",
+        "dying",
+        "who-to-call",
+        "prepare"
+      ],
+      "offline": true,
+      "printable": true,
+      "maturity": "demo",
+      "verified": false,
+      "verified_at": null
+    },
+    {
+      "id": "emergency",
+      "title": "Лист для скорой",
+      "summary": "Главное о ребёнке на сложном уходе для бригады скорой, лист A4 и карточка в кошелёк",
+      "path": "emergency/",
+      "audience": [
+        "family"
+      ],
+      "situations": [
+        "emergency-sheet",
+        "prepare"
+      ],
+      "offline": true,
+      "printable": true,
+      "maturity": "demo",
+      "verified": false,
+      "verified_at": null
+    },
+    {
+      "id": "discharge",
+      "title": "До того, как забрать домой",
+      "summary": "Что получить на руки в больнице до выписки и что значит каждая бумага",
+      "path": "discharge/",
+      "audience": [
+        "family"
+      ],
+      "situations": [
+        "discharge",
+        "device"
+      ],
+      "offline": true,
+      "printable": true,
+      "maturity": "demo",
+      "verified": false,
+      "verified_at": null
+    },
+    {
+      "id": "conclusion",
+      "title": "Что даёт заключение о паллиативной помощи",
+      "summary": "Показания дословно для разговора с врачом и то, что нужно просить отдельно",
+      "path": "conclusion/",
+      "audience": [
+        "family"
+      ],
+      "situations": [
+        "conclusion"
+      ],
+      "offline": true,
+      "printable": true,
+      "maturity": "demo",
+      "verified": false,
+      "verified_at": null
+    },
+    {
+      "id": "ahead",
+      "title": "Что подписать, пока человек может",
+      "summary": "Несколько вопросов и лист, что оформить на этой неделе",
+      "path": "ahead/",
+      "audience": [
+        "family"
+      ],
+      "situations": [
+        "prepare",
+        "dying",
+        "turning-18"
+      ],
+      "offline": true,
+      "printable": true,
+      "maturity": "demo",
+      "verified": false,
+      "verified_at": null
+    }
+  ]
+}

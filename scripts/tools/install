@@ -1,0 +1,54 @@
+#!/bin/sh
+set -eu
+TOOLS="$(cd "$(dirname "$0")" && pwd)"
+BIN="$TOOLS/bin"
+ACTIONLINT=1.7.12
+SHELLCHECK=0.10.0
+
+os="$(uname -s | tr '[:upper:]' '[:lower:]')"
+arch="$(uname -m)"
+case "$os-$arch" in
+  darwin-arm64)
+    al_file="actionlint_${ACTIONLINT}_darwin_arm64.tar.gz"; al_sum=aba9ced2dee8d27fecca3dc7feb1a7f9a52caefa1eb46f3271ea66b6e0e6953f
+    sc_file="shellcheck-v${SHELLCHECK}.darwin.aarch64.tar.xz"; sc_sum=bbd2f14826328eee7679da7221f2bc3afb011f6a928b848c80c321f6046ddf81 ;;
+  darwin-x86_64)
+    al_file="actionlint_${ACTIONLINT}_darwin_amd64.tar.gz"; al_sum=5b44c3bc2255115c9b69e30efc0fecdf498fdb63c5d58e17084fd5f16324c644
+    sc_file="shellcheck-v${SHELLCHECK}.darwin.x86_64.tar.xz"; sc_sum=ef27684f23279d112d8ad84e0823642e43f838993bbb8c0963db9b58a90464c2 ;;
+  linux-x86_64)
+    al_file="actionlint_${ACTIONLINT}_linux_amd64.tar.gz"; al_sum=8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8
+    sc_file="shellcheck-v${SHELLCHECK}.linux.x86_64.tar.xz"; sc_sum=6c881ab0698e4e6ea235245f22832860544f17ba386442fe7e9d629f8cbedf87 ;;
+  linux-aarch64 | linux-arm64)
+    al_file="actionlint_${ACTIONLINT}_linux_arm64.tar.gz"; al_sum=325e971b6ba9bfa504672e29be93c24981eeb1c07576d730e9f7c8805afff0c6
+    sc_file="shellcheck-v${SHELLCHECK}.linux.aarch64.tar.xz"; sc_sum=324a7e89de8fa2aed0d0c28f3dab59cf84c6d74264022c00c22af665ed1a09bb ;;
+  *) echo "Нет пиннованной сборки для $os-$arch"; exit 1 ;;
+esac
+
+if command -v sha256sum >/dev/null 2>&1; then sum() { sha256sum "$1" | cut -d' ' -f1; }; else sum() { shasum -a 256 "$1" | cut -d' ' -f1; }; fi
+
+fetch() {
+  url="$1"; file="$2"; want="$3"
+  curl -fsSL --retry 3 -o "$tmp/$file" "$url/$file"
+  got="$(sum "$tmp/$file")"
+  if [ "$got" != "$want" ]; then
+    echo "sha256 не совпал для $file: ждали $want, получили $got"
+    exit 1
+  fi
+}
+
+have() { [ -x "$BIN/$1" ] && "$BIN/$1" --version 2>/dev/null | grep -q "$2"; }
+
+mkdir -p "$BIN"
+tmp="$(mktemp -d)"
+trap 'rm -rf "$tmp"' EXIT
+
+if ! have actionlint "$ACTIONLINT"; then
+  fetch "https://github.com/rhysd/actionlint/releases/download/v$ACTIONLINT" "$al_file" "$al_sum"
+  tar -xzf "$tmp/$al_file" -C "$tmp" actionlint
+  install -m 0755 "$tmp/actionlint" "$BIN/actionlint"
+fi
+if ! have shellcheck "$SHELLCHECK"; then
+  fetch "https://github.com/koalaman/shellcheck/releases/download/v$SHELLCHECK" "$sc_file" "$sc_sum"
+  tar -xJf "$tmp/$sc_file" -C "$tmp"
+  install -m 0755 "$tmp/shellcheck-v$SHELLCHECK/shellcheck" "$BIN/shellcheck"
+fi
+echo "actionlint $("$BIN/actionlint" --version | head -1), shellcheck $("$BIN/shellcheck" --version | sed -n 's/^version: //p')"

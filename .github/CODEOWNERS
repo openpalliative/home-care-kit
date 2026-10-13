@@ -1,0 +1,11 @@
+* @knQzx
+
+/templates/ @knQzx
+/content/ @knQzx
+/lib/ @knQzx
+/vendor/ @knQzx
+/site_hooks.py @knQzx
+/.github/ @knQzx
+
+# медик в РФ: добавить свой GitHub-аккаунт в строку ниже, когда появится
+/data/sheets/ @knQzx

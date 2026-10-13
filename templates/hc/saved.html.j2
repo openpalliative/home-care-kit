@@ -1,0 +1,67 @@
+{% extends "hc/layout.html.j2" %}
+{% from "partials/hi.html.j2" import hi %}
+{% import "op/macros.html.j2" as op with context %}
+{% set crumb = "Что сохранено" %}
+{% block title %}Что сохранено на этом устройстве{% endblock %}
+{% block description %}Заполненные листы на этом устройстве: сохранить копию файлом, открыть файл, удалить{% endblock %}
+{% block page_head %}<link rel="stylesheet" href="{{ url('assets/css/hc-pages.css') }}">
+<script type="module" src="{{ url('assets/js/hc-saved.js') }}"></script>{% endblock %}
+{% block content %}
+<h1>Что сохранено на этом устройстве</h1>
+<p class="op-lead">Листы хранятся только в этом браузере. Мы их не видим, и на другие устройства они сами не попадают</p>
+<noscript><p class="hc-nojs">{{ hi("info") }}<span>Без JavaScript ничего не сохраняется</span></p></noscript>
+<hc-saved class="hc-saved-page hc-js-only" data-limits='{{ site.hc.limits | tojson }}'>
+  <section class="op-section" aria-labelledby="s-list">
+    <h2 id="s-list">Листы</h2>
+    <p class="hc-empty" data-hc-saved-empty>На этом устройстве пока нет сохранённых листов. Карта на ночь сохраняется сама, лист для скорой сохраняется, если вы разрешили</p>
+    <ul class="hc-savedlist" data-hc-saved-list hidden></ul>
+    <template id="hc-saved-item">
+      <li class="hc-savedlist__item">
+        <a class="hc-savedlist__title" href="#"></a>
+        <span class="hc-savedlist__meta"></span>
+      </li>
+    </template>
+    {% for s in site.hc.order %}<a hidden data-hc-sheet-link="{{ s.id }}" href="{{ url(s.path) }}">{{ s.title }}</a>{% endfor %}
+  </section>
+  <section class="op-section" aria-labelledby="s-file">
+    <h2 id="s-file">Копия файлом</h2>
+    <p>Safari и некоторые телефоны стирают записи сайтов, которые долго не открывали. Сохраните копию файлом, а главное держите на бумаге</p>
+    <p class="hc-warn hc-js-only" data-hc-export-warn>{{ hi("triangle-alert") }}<span>Файл не зашифрован. Храните его как медицинские документы</span></p>
+    <div class="hc-actions">
+      <button type="button" class="op-btn op-btn--secondary" data-hc-export>{{ hi("download") }}<span>Сохранить файлом</span></button>
+      <button type="button" class="op-btn op-btn--secondary" data-hc-import>{{ hi("upload") }}<span>Открыть файл</span></button>
+    </div>
+    <p class="hc-live" data-hc-file-live role="status" aria-live="polite"></p>
+    <dialog class="op-dialog" aria-labelledby="hc-replace-title" data-hc-replace-dialog>
+      <form method="dialog">
+        <h2 class="op-dialog__title" id="hc-replace-title">Заменить лист на этом устройстве?</h2>
+        <p>Лист «<span data-hc-replace-name></span>» уже есть на этом устройстве. Если заменить, на устройстве останется версия из файла</p>
+        <dl class="hc-replace">
+          <div><dt>На устройстве</dt><dd data-hc-replace-here></dd></div>
+          <div><dt>В файле</dt><dd data-hc-replace-file></dd></div>
+        </dl>
+        <div class="op-dialog__actions">
+          <button class="op-btn op-btn--primary" value="replace" type="submit"><span>Заменить</span></button>
+          <button class="op-btn op-btn--secondary" value="cancel" type="submit" autofocus><span>Отмена</span></button>
+        </div>
+      </form>
+    </dialog>
+  </section>
+  <section class="op-section" aria-labelledby="s-wipe">
+    <h2 id="s-wipe">Удалить</h2>
+    <p>Удалит заполненные листы и настройки листов в этом браузере. Регион и вид сайта останутся. Всё сразу для всех инструментов удаляется на странице <a href="{{ hub('privacy/') }}">«Приватность»</a></p>
+    <button type="button" class="op-btn op-btn--danger" data-hc-wipe-open>{{ hi("trash-2") }}<span>Удалить листы с этого устройства</span></button>
+    <dialog class="op-dialog" aria-labelledby="hc-wipe-title" data-hc-wipe-dialog>
+      <form method="dialog">
+        <h2 class="op-dialog__title" id="hc-wipe-title">Удалить листы с этого устройства?</h2>
+        <p>Заполненные листы будут удалены из этого браузера. Вернуть их нельзя. Если нужна копия, сначала сохраните её файлом</p>
+        <div class="op-dialog__actions">
+          <button class="op-btn op-btn--danger" value="wipe" type="submit">{{ hi("trash-2") }}<span>Да, удалить листы</span></button>
+          <button class="op-btn op-btn--secondary" value="cancel" type="submit" autofocus><span>Отмена</span></button>
+        </div>
+      </form>
+    </dialog>
+    <p class="hc-live" data-hc-wipe-live role="status" aria-live="polite"></p>
+  </section>
+</hc-saved>
+{% endblock %}

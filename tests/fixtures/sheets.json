@@ -1,0 +1,1993 @@
+{
+  "format": "openpalliative-dataset/1",
+  "dataset": "sheets",
+  "repo": "home-care-kit",
+  "schema_version": "1.0.0",
+  "version": "2026.10.11",
+  "generated_at": "2026-10-11T12:00:00Z",
+  "data_date": "2026-10-11",
+  "stale_after_days": 90,
+  "license": "CC-BY-SA-4.0",
+  "source": [
+    {
+      "id": "home-care-kit-texts",
+      "title": "Тексты листов openpalliative, черновик до проверки юристом и медиком в РФ",
+      "url": "https://github.com/openpalliative/home-care-kit/tree/main/data/sheets",
+      "license": "CC-BY-SA-4.0"
+    }
+  ],
+  "content_sha256": "49233feca9c485613d5cb71816f8f18e5834c2f668477310f8adcc05e768ebb2",
+  "counts": {
+    "items": 5,
+    "unverified": 5,
+    "excluded": 0
+  },
+  "items": [
+    {
+      "id": "night",
+      "title": "Карта на ночь и праздники",
+      "summary": "Свои номера на ночь и выходные, что сказать диспетчеру скорой, папка с документами на случай",
+      "path": "night/",
+      "minutes": 5,
+      "paper": [
+        "a4"
+      ],
+      "print_pages": {
+        "a4": 2
+      },
+      "storage": "save",
+      "validity": {
+        "rule": "recheck",
+        "recheck_days": 183,
+        "line_days": 365
+      },
+      "draft": "both",
+      "version": "2026.10.11",
+      "verified": false,
+      "verified_at": null,
+      "review": {
+        "needs": "both",
+        "reviewed_by": null,
+        "reviewed_at": null
+      },
+      "situations": [
+        "night-pain",
+        "dying",
+        "who-to-call",
+        "prepare"
+      ],
+      "steps": [
+        {
+          "id": "fill",
+          "title": "Заполнить",
+          "text": "Впишите номера, по которым звоните днём и ночью. Пустое поле на листе останется линией для ручки"
+        },
+        {
+          "id": "check",
+          "title": "Проверить",
+          "text": "Позвоните по каждому номеру или сверьте с документами. После этого у листа появится срок годности"
+        },
+        {
+          "id": "print",
+          "title": "Распечатать или сохранить PDF",
+          "text": "Две стороны одного листа или два листа. Первую сторону повесьте на холодильник, вторую положите в папку с документами"
+        }
+      ],
+      "fields": [
+        {
+          "id": "person_name",
+          "label": "Как зовут человека, за которым вы ухаживаете",
+          "hint": "Чтобы диспетчер и врач обращались по имени. Можно не заполнять",
+          "type": "text",
+          "max_len": 40,
+          "autocomplete": "off",
+          "demo": "Анна Петровна"
+        },
+        {
+          "id": "address",
+          "label": "Адрес для скорой",
+          "hint": "Город, улица, дом, квартира, подъезд, этаж, код домофона",
+          "type": "textarea",
+          "max_len": 140,
+          "autocomplete": "street-address",
+          "blank_lines": 2,
+          "demo": "г. Примерный, ул. Садовая, д. 1, кв. 2, подъезд 1, этаж 3, домофон 2В"
+        },
+        {
+          "id": "vk_date",
+          "label": "Дата заключения врачебной комиссии о паллиативной помощи",
+          "hint": "Дата есть на самом заключении. Если заключения пока нет, оставьте пустым",
+          "type": "date",
+          "max_len": 10,
+          "demo": "2026-09-01"
+        },
+        {
+          "id": "hospice_name",
+          "label": "Выездная служба паллиативной помощи, название",
+          "hint": "Как называется служба, которая приходит домой",
+          "type": "text",
+          "max_len": 60,
+          "demo": "Выездная служба (пример)"
+        },
+        {
+          "id": "hospice_phone",
+          "label": "Выездная служба, телефон",
+          "type": "tel",
+          "max_len": 20,
+          "autocomplete": "off",
+          "demo": "+7 000 000-00-11"
+        },
+        {
+          "id": "hospice_hours",
+          "label": "Выездная служба, часы работы",
+          "hint": "Например, круглосуточно или пн-пт 9-18. Спросите у службы, кто отвечает ночью и в праздники",
+          "type": "text",
+          "max_len": 40,
+          "demo": "пн-пт 9-18"
+        },
+        {
+          "id": "cabinet_phone",
+          "label": "Кабинет паллиативной помощи в поликлинике, телефон",
+          "type": "tel",
+          "max_len": 20,
+          "autocomplete": "off",
+          "demo": "+7 000 000-00-12"
+        },
+        {
+          "id": "cabinet_hours",
+          "label": "Кабинет, часы работы",
+          "type": "text",
+          "max_len": 40,
+          "demo": "пн-пт 8-16"
+        },
+        {
+          "id": "region_line",
+          "label": "Линия по обезболиванию в вашем регионе",
+          "hint": "Если такой линии нет или номер не проверен, оставьте пустым. Номер из нашего списка попадёт на лист только после того, как вы по нему позвоните",
+          "type": "tel",
+          "max_len": 20,
+          "autocomplete": "off",
+          "suggest": "region",
+          "suggest_id": "pain",
+          "confirm": true
+        },
+        {
+          "id": "hotline",
+          "label": "Горячая линия помощи неизлечимо больным людям",
+          "hint": "Это сторонняя линия, мы с ней не связаны. На лист номер попадёт после того, как вы по нему позвоните",
+          "type": "tel",
+          "max_len": 20,
+          "autocomplete": "off",
+          "suggest": "now",
+          "suggest_id": "hotline",
+          "confirm": true
+        },
+        {
+          "id": "pharmacy",
+          "label": "Аптека, где выдают обезболивающие по рецепту, адрес",
+          "hint": "Спросите у врача, в какую аптеку идти с рецептом",
+          "type": "text",
+          "max_len": 80,
+          "demo": "ул. Садовая, д. 5"
+        },
+        {
+          "id": "pharmacy_phone",
+          "label": "Аптека, телефон",
+          "type": "tel",
+          "max_len": 20,
+          "autocomplete": "off",
+          "demo": "+7 000 000-00-13"
+        },
+        {
+          "id": "pharmacy_hours",
+          "label": "Аптека, часы работы",
+          "hint": "Узнайте, работает ли аптека в праздники",
+          "type": "text",
+          "max_len": 40,
+          "demo": "ежедневно 8-20"
+        },
+        {
+          "id": "next_rx",
+          "label": "Когда нужен следующий рецепт",
+          "hint": "Спросите у врача, сколько действует рецепт и когда приходить за новым",
+          "type": "date",
+          "max_len": 10,
+          "demo": "2026-12-28"
+        },
+        {
+          "id": "folder_place",
+          "label": "Где лежит папка с документами",
+          "hint": "Чтобы её нашёл любой, кто окажется рядом",
+          "type": "text",
+          "max_len": 80,
+          "demo": "Шкаф в прихожей, верхняя полка, синяя папка"
+        },
+        {
+          "id": "contact_day_name",
+          "label": "Кого звать днём, имя",
+          "type": "text",
+          "max_len": 40,
+          "demo": "Ольга, дочь"
+        },
+        {
+          "id": "contact_day_phone",
+          "label": "Кого звать днём, телефон",
+          "type": "tel",
+          "max_len": 20,
+          "autocomplete": "off",
+          "demo": "+7 000 000-00-14"
+        },
+        {
+          "id": "contact_night_name",
+          "label": "Кого звать ночью, имя",
+          "type": "text",
+          "max_len": 40,
+          "demo": "Сергей, сосед"
+        },
+        {
+          "id": "contact_night_phone",
+          "label": "Кого звать ночью, телефон",
+          "type": "tel",
+          "max_len": 20,
+          "autocomplete": "off",
+          "demo": "+7 000 000-00-15"
+        },
+        {
+          "id": "who_certifies",
+          "label": "Кто приходит ночью и в выходные, если человек умрёт дома",
+          "hint": "Спросите в поликлинике или выездной службе заранее и запишите ответ своими словами",
+          "type": "textarea",
+          "max_len": 140,
+          "blank_lines": 2
+        },
+        {
+          "id": "checked_by",
+          "label": "Кто проверял номера",
+          "type": "text",
+          "max_len": 40,
+          "demo": "Ольга"
+        }
+      ],
+      "sections": [
+        {
+          "id": "side-night",
+          "title": "Ночь и праздники",
+          "side": 1,
+          "blocks": [
+            {
+              "id": "life-threat",
+              "kind": "locked",
+              "text": "При угрозе жизни звоните 103 или 112",
+              "now_ids": [
+                "ambulance",
+                "emergency"
+              ],
+              "print": true,
+              "verified": true,
+              "verified_at": "2026-10-11",
+              "source_ref": "now-yaml",
+              "review": {
+                "needs": "none",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            },
+            {
+              "id": "pain",
+              "kind": "script",
+              "title": "Сильная боль",
+              "text": "Звоните 103. Скажите диспетчеру",
+              "lines": [
+                "Человек получает паллиативную помощь",
+                "У него сильная боль, обычное обезболивание не помогает",
+                "Адрес: {address}",
+                "Есть заключение врачебной комиссии о паллиативной помощи от {vk_date}"
+              ],
+              "field_ids": [
+                "address",
+                "vk_date"
+              ],
+              "print": true,
+              "verified": true,
+              "verified_at": "2026-10-11",
+              "review": {
+                "needs": "medical",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            },
+            {
+              "id": "ambulance-norm",
+              "kind": "quote",
+              "title": "Должна ли скорая обезболить",
+              "text": "Мы ищем официальный текст порядка скорой помощи. Пока он не сверен, этот пункт на лист не попадает",
+              "norm_ids": [
+                "388n"
+              ],
+              "quote_refs": [
+                {
+                  "quote_id": "388n-p11"
+                }
+              ],
+              "print": true,
+              "verified": false,
+              "verified_at": null,
+              "review": {
+                "needs": "both",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            },
+            {
+              "id": "numbers",
+              "kind": "numbers",
+              "title": "Кроме 103",
+              "field_ids": [
+                "hospice_name",
+                "hospice_phone",
+                "hospice_hours",
+                "cabinet_phone",
+                "cabinet_hours",
+                "region_line",
+                "hotline",
+                "pharmacy",
+                "pharmacy_phone",
+                "pharmacy_hours"
+              ],
+              "now_ids": [
+                "hotline"
+              ],
+              "region_roles": [
+                "pain"
+              ],
+              "links": [
+                {
+                  "label": "Откуда номера по регионам",
+                  "repo": "pal-directory",
+                  "path": ""
+                }
+              ],
+              "print": true,
+              "verified": true,
+              "verified_at": "2026-10-11",
+              "review": {
+                "needs": "none",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            },
+            {
+              "id": "rx",
+              "kind": "fields",
+              "title": "Рецепт",
+              "field_ids": [
+                "next_rx"
+              ],
+              "print": true,
+              "verified": true,
+              "verified_at": "2026-10-11",
+              "review": {
+                "needs": "none",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            },
+            {
+              "id": "holidays",
+              "kind": "holidays",
+              "title": "Ближайшие длинные выходные",
+              "text": "Перед ними заранее спросите у врача, как получить рецепт и обезболивание на эти дни",
+              "links": [
+                {
+                  "label": "Календарь выходных",
+                  "repo": "pal-norms",
+                  "path": "calendar/"
+                }
+              ],
+              "print": true,
+              "verified": true,
+              "verified_at": "2026-10-11",
+              "review": {
+                "needs": "none",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            },
+            {
+              "id": "dying-short",
+              "kind": "text",
+              "title": "Если человек умирает дома",
+              "text": "Позвоните в выездную службу. Что лежит в папке с документами и кого звать, написано на обороте",
+              "print": true,
+              "verified": true,
+              "verified_at": "2026-10-11",
+              "review": {
+                "needs": "both",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            },
+            {
+              "id": "who",
+              "kind": "fields",
+              "title": "Для кого лист",
+              "field_ids": [
+                "person_name",
+                "address",
+                "vk_date"
+              ],
+              "print": true,
+              "verified": true,
+              "verified_at": "2026-10-11",
+              "review": {
+                "needs": "none",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            }
+          ]
+        },
+        {
+          "id": "side-folder",
+          "title": "Папка на случай",
+          "side": 2,
+          "anchor": "folder",
+          "blocks": [
+            {
+              "id": "folder",
+              "kind": "fields",
+              "title": "Где папка",
+              "field_ids": [
+                "folder_place"
+              ],
+              "print": true,
+              "verified": true,
+              "verified_at": "2026-10-11",
+              "review": {
+                "needs": "none",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            },
+            {
+              "id": "docs",
+              "kind": "checklist",
+              "title": "Что лежит в папке",
+              "text": "Отметьте ручкой, что уже положили",
+              "print": true,
+              "verified": true,
+              "verified_at": "2026-10-11",
+              "review": {
+                "needs": "legal",
+                "reviewed_by": null,
+                "reviewed_at": null
+              },
+              "items": [
+                {
+                  "id": "doc-vk",
+                  "text": "Заключение врачебной комиссии о паллиативной помощи",
+                  "verified": true,
+                  "verified_at": "2026-10-11",
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                },
+                {
+                  "id": "doc-discharge",
+                  "text": "Выписки из больницы",
+                  "verified": true,
+                  "verified_at": "2026-10-11",
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                },
+                {
+                  "id": "doc-refusal",
+                  "text": "Письменный отказ от госпитализации, если человек его подписывал",
+                  "verified": true,
+                  "verified_at": "2026-10-11",
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                },
+                {
+                  "id": "doc-passport",
+                  "text": "Паспорт",
+                  "verified": true,
+                  "verified_at": "2026-10-11",
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                },
+                {
+                  "id": "doc-oms",
+                  "text": "Полис ОМС",
+                  "verified": true,
+                  "verified_at": "2026-10-11",
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                },
+                {
+                  "id": "doc-snils",
+                  "text": "СНИЛС",
+                  "verified": true,
+                  "verified_at": "2026-10-11",
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                },
+                {
+                  "id": "doc-poa",
+                  "text": "Доверенность, если она есть",
+                  "verified": true,
+                  "verified_at": "2026-10-11",
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                },
+                {
+                  "id": "doc-rx",
+                  "text": "Назначения врача и рецепты",
+                  "verified": true,
+                  "verified_at": "2026-10-11",
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                }
+              ]
+            },
+            {
+              "id": "contacts",
+              "kind": "fields",
+              "title": "Кого звать",
+              "field_ids": [
+                "contact_day_name",
+                "contact_day_phone",
+                "contact_night_name",
+                "contact_night_phone"
+              ],
+              "print": true,
+              "verified": true,
+              "verified_at": "2026-10-11",
+              "review": {
+                "needs": "none",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            },
+            {
+              "id": "ask-clinic",
+              "kind": "fields",
+              "title": "Спросите в поликлинике заранее",
+              "field_ids": [
+                "who_certifies"
+              ],
+              "print": true,
+              "verified": true,
+              "verified_at": "2026-10-11",
+              "review": {
+                "needs": "both",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            },
+            {
+              "id": "first-48",
+              "kind": "checklist",
+              "title": "Первые 48 часов",
+              "print": true,
+              "verified": false,
+              "verified_at": null,
+              "review": {
+                "needs": "legal",
+                "reviewed_by": null,
+                "reviewed_at": null
+              },
+              "items": [
+                {
+                  "id": "poa-ends",
+                  "text": "Доверенность прекращает действие со смертью человека, который её выдал",
+                  "norm_ids": [
+                    "gk-188"
+                  ],
+                  "quote_refs": [
+                    {
+                      "quote_id": "gk-188-p1"
+                    }
+                  ],
+                  "verified": false,
+                  "verified_at": null,
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                },
+                {
+                  "id": "card",
+                  "text": "Не снимайте деньги с карты умершего, даже если знаете пин-код. Спросите юриста или нотариуса, как быть с деньгами",
+                  "verified": false,
+                  "verified_at": null,
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                },
+                {
+                  "id": "funeral-money",
+                  "text": "Часть денег со счёта умершего можно получить на похороны через нотариуса. Спросите нотариуса, какие документы взять",
+                  "norm_ids": [
+                    "gk-1174"
+                  ],
+                  "quote_refs": [
+                    {
+                      "quote_id": "gk-1174-p3"
+                    }
+                  ],
+                  "verified": false,
+                  "verified_at": null,
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                }
+              ]
+            },
+            {
+              "id": "last-days",
+              "kind": "placeholder",
+              "title": "Последние дни",
+              "print": false,
+              "verified": false,
+              "verified_at": null,
+              "review": {
+                "needs": "both",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            },
+            {
+              "id": "no-police",
+              "kind": "placeholder",
+              "title": "Смерть дома, кого звать и нужна ли полиция",
+              "print": false,
+              "verified": false,
+              "verified_at": null,
+              "review": {
+                "needs": "both",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "emergency",
+      "title": "Лист для скорой",
+      "summary": "Главное о ребёнке на сложном уходе для бригады скорой и приёмного отделения, лист A4 и карточка в кошелёк",
+      "path": "emergency/",
+      "minutes": 10,
+      "paper": [
+        "a4",
+        "wallet"
+      ],
+      "print_pages": {
+        "a4": 1,
+        "wallet": 1
+      },
+      "storage": "ask",
+      "validity": {
+        "rule": "watermark",
+        "watermark_days": 90
+      },
+      "draft": "medical",
+      "version": "2026.10.11",
+      "verified": false,
+      "verified_at": null,
+      "review": {
+        "needs": "medical",
+        "reviewed_by": null,
+        "reviewed_at": null
+      },
+      "situations": [
+        "emergency-sheet",
+        "prepare"
+      ],
+      "steps": [
+        {
+          "id": "fill",
+          "title": "Заполнить",
+          "text": "Лучше заполнять вместе с врачом или медсестрой выездной службы. Переписывайте из выписок и назначений"
+        },
+        {
+          "id": "check",
+          "title": "Проверить",
+          "text": "Укажите, кто проверил лист и когда. Проверяйте раз в 3 месяца и после каждой выписки"
+        },
+        {
+          "id": "print",
+          "title": "Распечатать или сохранить PDF",
+          "text": "Лист A4 повесьте на видное место, карточку положите в кошелёк или в сумку с аппаратом"
+        }
+      ],
+      "fields": [
+        {
+          "id": "child_name",
+          "label": "Имя ребёнка",
+          "type": "text",
+          "max_len": 40,
+          "required": true,
+          "autocomplete": "off",
+          "qr_order": 1,
+          "qr_key": "Имя",
+          "demo": "Миша"
+        },
+        {
+          "id": "birth_date",
+          "label": "Дата рождения",
+          "type": "date",
+          "max_len": 10,
+          "qr_order": 2,
+          "qr_key": "Родился",
+          "demo": "2018-04-12"
+        },
+        {
+          "id": "diagnosis",
+          "label": "Основное заболевание, как записано в выписке",
+          "hint": "Перепишите из выписки слово в слово",
+          "type": "textarea",
+          "max_len": 120,
+          "qr_order": 3,
+          "qr_key": "Заболевание",
+          "demo": "Пример, спинальная мышечная атрофия"
+        },
+        {
+          "id": "breathing",
+          "label": "Дыхание, аппарат и режим, как записано врачом",
+          "hint": "Если ребёнок дышит сам, так и напишите",
+          "type": "textarea",
+          "max_len": 120,
+          "qr_order": 4,
+          "qr_key": "Дыхание",
+          "demo": "Пример, аппарат ночью, режим по назначению врача"
+        },
+        {
+          "id": "trach_main",
+          "label": "Трахеостомическая трубка, модель и размер",
+          "hint": "Перепишите с упаковки или из выписки",
+          "type": "text",
+          "max_len": 60,
+          "qr_order": 5,
+          "qr_key": "Трубка",
+          "demo": "Пример, модель и размер с упаковки"
+        },
+        {
+          "id": "trach_spare",
+          "label": "Запасная трубка и трубка на размер меньше, где лежат",
+          "type": "text",
+          "max_len": 80,
+          "qr_order": 8,
+          "qr_key": "Запасные",
+          "demo": "Сумка у кровати, левый карман"
+        },
+        {
+          "id": "feeding",
+          "label": "Зонд или стома, чем кормим",
+          "type": "text",
+          "max_len": 100,
+          "qr_order": 7,
+          "qr_key": "Питание",
+          "demo": "Пример, гастростома, смесь по назначению врача"
+        },
+        {
+          "id": "usual_values",
+          "label": "Обычные для ребёнка показатели дыхания, как записал врач",
+          "hint": "Перепишите из выписки. Мы не подсказываем значения",
+          "type": "textarea",
+          "max_len": 100,
+          "qr_order": 9,
+          "qr_key": "Обычно"
+        },
+        {
+          "id": "pain_signs",
+          "label": "Как ребёнок показывает боль",
+          "hint": "Своими словами, как вы это видите",
+          "type": "textarea",
+          "max_len": 120,
+          "demo": "Морщится, учащается дыхание, поджимает ноги"
+        },
+        {
+          "id": "seizures",
+          "label": "Судороги, как обычно выглядят",
+          "hint": "Своими словами. Если судорог не бывает, так и напишите",
+          "type": "textarea",
+          "max_len": 120
+        },
+        {
+          "id": "allergies",
+          "label": "Аллергии",
+          "type": "text",
+          "max_len": 80,
+          "qr_order": 6,
+          "qr_key": "Аллергии",
+          "demo": "Нет известных"
+        },
+        {
+          "id": "pain_relief",
+          "label": "Обезболивание по назначению врача, кто назначил, его телефон",
+          "hint": "Перепишите из назначения врача слово в слово",
+          "type": "textarea",
+          "max_len": 160,
+          "autocomplete": "off",
+          "blank_lines": 3
+        },
+        {
+          "id": "vk",
+          "label": "Заключение врачебной комиссии о паллиативной помощи, номер и дата",
+          "type": "text",
+          "max_len": 40,
+          "qr_order": 10,
+          "qr_key": "Заключение ВК",
+          "demo": "12 от 01.09.2026 (пример)"
+        },
+        {
+          "id": "hospice",
+          "label": "Выездная служба, название, телефон, работает ли круглосуточно",
+          "type": "text",
+          "max_len": 80,
+          "qr_order": 11,
+          "qr_key": "Выездная служба",
+          "demo": "Выездная служба (пример), +7 000 000-00-11, круглосуточно"
+        },
+        {
+          "id": "parent",
+          "label": "Родитель или кто рядом, имя и телефон",
+          "type": "text",
+          "max_len": 60,
+          "qr_order": 12,
+          "qr_key": "Родитель",
+          "demo": "Мама Ольга, +7 000 000-00-14"
+        },
+        {
+          "id": "wishes",
+          "label": "Пожелания, обсуждённые с выездной службой",
+          "hint": "Например, куда везти и кого позвать. Обсудите это с врачом выездной службы",
+          "type": "textarea",
+          "max_len": 200,
+          "fixed_caption": "Это не юридический отказ от реанимации",
+          "blank_lines": 3
+        },
+        {
+          "id": "checked_by",
+          "label": "Кто проверил лист",
+          "hint": "Врач, медсестра или родитель",
+          "type": "text",
+          "max_len": 60,
+          "demo": "Медсестра выездной службы"
+        },
+        {
+          "id": "checked_at",
+          "label": "Дата проверки",
+          "type": "date",
+          "max_len": 10,
+          "required": true,
+          "qr_order": 13,
+          "qr_key": "Проверено",
+          "demo": "2026-10-01"
+        }
+      ],
+      "sections": [
+        {
+          "id": "card",
+          "title": "Лист для скорой",
+          "side": null,
+          "blocks": [
+            {
+              "id": "life-threat",
+              "kind": "locked",
+              "text": "При угрозе жизни звоните 103 или 112",
+              "now_ids": [
+                "ambulance",
+                "emergency"
+              ],
+              "print": true,
+              "verified": true,
+              "verified_at": "2026-10-11",
+              "source_ref": "now-yaml",
+              "review": {
+                "needs": "none",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            },
+            {
+              "id": "how",
+              "kind": "text",
+              "title": "Как пользоваться",
+              "text": "Бригада читает лист за полминуты. Пишите коротко, как в выписке. Медицинские данные остаются только на этом устройстве и на бумаге",
+              "print": false,
+              "verified": true,
+              "verified_at": "2026-10-11",
+              "review": {
+                "needs": "none",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            },
+            {
+              "id": "data",
+              "kind": "fields",
+              "title": "Главное о ребёнке",
+              "field_ids": [
+                "child_name",
+                "birth_date",
+                "diagnosis",
+                "breathing",
+                "trach_main",
+                "trach_spare",
+                "feeding",
+                "usual_values",
+                "pain_signs",
+                "seizures",
+                "allergies",
+                "pain_relief",
+                "vk",
+                "hospice",
+                "parent"
+              ],
+              "print": true,
+              "verified": true,
+              "verified_at": "2026-10-11",
+              "review": {
+                "needs": "medical",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            },
+            {
+              "id": "wishes",
+              "kind": "fields",
+              "title": "Пожелания",
+              "field_ids": [
+                "wishes"
+              ],
+              "print": true,
+              "verified": true,
+              "verified_at": "2026-10-11",
+              "review": {
+                "needs": "both",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            },
+            {
+              "id": "qr",
+              "kind": "qr",
+              "title": "Код с данными",
+              "text": "Код читается любой камерой телефона. Внутри только текст с этого листа, без ссылок",
+              "print": true,
+              "verified": true,
+              "verified_at": "2026-10-11",
+              "review": {
+                "needs": "none",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            },
+            {
+              "id": "checked",
+              "kind": "fields",
+              "title": "Проверка",
+              "field_ids": [
+                "checked_by",
+                "checked_at"
+              ],
+              "print": true,
+              "verified": true,
+              "verified_at": "2026-10-11",
+              "review": {
+                "needs": "none",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "discharge",
+      "title": "До того, как забрать домой",
+      "summary": "Что получить на руки в больнице до выписки, что спросить и что значит каждая бумага",
+      "path": "discharge/",
+      "minutes": 3,
+      "paper": [
+        "a4"
+      ],
+      "print_pages": {
+        "a4": 2
+      },
+      "storage": "none",
+      "validity": {
+        "rule": "none"
+      },
+      "draft": "both",
+      "version": "2026.10.11",
+      "verified": false,
+      "verified_at": null,
+      "review": {
+        "needs": "both",
+        "reviewed_by": null,
+        "reviewed_at": null
+      },
+      "situations": [
+        "discharge",
+        "device"
+      ],
+      "steps": [
+        {
+          "id": "print",
+          "title": "Распечатать или сохранить PDF",
+          "text": "Возьмите лист с собой в больницу и отмечайте ручкой, что уже получили"
+        }
+      ],
+      "fields": [],
+      "sections": [
+        {
+          "id": "common",
+          "title": "Что получить на руки",
+          "branch": "all",
+          "blocks": [
+            {
+              "id": "common-list",
+              "kind": "checklist",
+              "print": true,
+              "verified": true,
+              "verified_at": "2026-10-11",
+              "review": {
+                "needs": "both",
+                "reviewed_by": null,
+                "reviewed_at": null
+              },
+              "items": [
+                {
+                  "id": "extract",
+                  "text": "Выписку на руки, с назначениями и рекомендациями по уходу дома",
+                  "branch": "all",
+                  "verified": true,
+                  "verified_at": "2026-10-11",
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                },
+                {
+                  "id": "who-next",
+                  "text": "Узнайте, кто будет наблюдать дома, и запишите его телефон",
+                  "branch": "all",
+                  "verified": true,
+                  "verified_at": "2026-10-11",
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                },
+                {
+                  "id": "first-visit",
+                  "text": "Спросите, когда первый визит или звонок врача домой",
+                  "branch": "all",
+                  "verified": true,
+                  "verified_at": "2026-10-11",
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                },
+                {
+                  "id": "pain-days",
+                  "text": "Обезболивание на первые дни дома. Спросите, дадут ли препарат с собой или выпишут рецепт, срок приёма до 5 дней. Это решает руководитель больницы. Рецепт на препарат бесплатно или со скидкой больница при выписке не оформляет. Если отказали, попросите отказ на бумаге",
+                  "detail": "Без рецепта в первые дни дома обезболивание получить труднее всего, особенно если выписывают перед выходными",
+                  "branch": "all",
+                  "norm_ids": [
+                    "1094n"
+                  ],
+                  "quote_refs": [
+                    {
+                      "quote_id": "1094n-p3"
+                    }
+                  ],
+                  "verified": true,
+                  "verified_at": "2026-10-11",
+                  "source_ref": "raw/1094n/p007-pril1-p3.txt",
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                },
+                {
+                  "id": "before-sign",
+                  "text": "Прежде чем подписать бумагу, спросите, что она значит и что будет дальше",
+                  "branch": "all",
+                  "verified": true,
+                  "verified_at": "2026-10-11",
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "has-vk",
+          "title": "Если есть заключение врачебной комиссии о паллиативной помощи",
+          "branch": "has-vk",
+          "blocks": [
+            {
+              "id": "vk-list",
+              "kind": "checklist",
+              "print": true,
+              "verified": false,
+              "verified_at": null,
+              "review": {
+                "needs": "both",
+                "reviewed_by": null,
+                "reviewed_at": null
+              },
+              "items": [
+                {
+                  "id": "vk-copy",
+                  "text": "Попросите копию заключения на руки, если её ещё нет",
+                  "branch": "has-vk",
+                  "norm_ids": [
+                    "208n-243n"
+                  ],
+                  "quote_refs": [
+                    {
+                      "quote_id": "208n-243n-p17"
+                    }
+                  ],
+                  "verified": true,
+                  "verified_at": "2026-10-11",
+                  "source_ref": "raw/208n-243n/p006-p12-p17.txt",
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                },
+                {
+                  "id": "handover",
+                  "text": "Если выписывают из паллиативного отделения или хосписа, спросите, отправили ли копию выписки в поликлинику и выездную службу, и когда придут на первый осмотр домой",
+                  "detail": "В положении о паллиативной помощи записано, что первичный осмотр организуют в течение 2 рабочих дней после такой выписки",
+                  "branch": "has-vk",
+                  "norm_ids": [
+                    "208n-243n"
+                  ],
+                  "quote_refs": [
+                    {
+                      "quote_id": "208n-243n-p20"
+                    }
+                  ],
+                  "verified": true,
+                  "verified_at": "2026-10-11",
+                  "source_ref": "raw/208n-243n/p007-p18-p20.txt",
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                },
+                {
+                  "id": "mse-social",
+                  "text": "Спросите, оформили ли направление на медико-социальную экспертизу и обращение о социальном обслуживании",
+                  "branch": "has-vk",
+                  "norm_ids": [
+                    "208n-243n"
+                  ],
+                  "quote_refs": [
+                    {
+                      "quote_id": "208n-243n-p18"
+                    }
+                  ],
+                  "verified": true,
+                  "verified_at": "2026-10-11",
+                  "source_ref": "raw/208n-243n/p007-p18-p20.txt",
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                },
+                {
+                  "id": "devices",
+                  "text": "Медицинские изделия для дома. Попросите оформить их передачу до выписки",
+                  "branch": "has-vk",
+                  "norm_ids": [
+                    "505n",
+                    "398n"
+                  ],
+                  "links": [
+                    {
+                      "label": "Кто выдаёт изделия",
+                      "repo": "pal-devices-data",
+                      "path": ""
+                    }
+                  ],
+                  "verified": false,
+                  "verified_at": null,
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "no-vk",
+          "title": "Если заключения нет или вы не знаете",
+          "branch": "no-vk",
+          "blocks": [
+            {
+              "id": "novk-list",
+              "kind": "checklist",
+              "print": true,
+              "verified": false,
+              "verified_at": null,
+              "review": {
+                "needs": "both",
+                "reviewed_by": null,
+                "reviewed_at": null
+              },
+              "items": [
+                {
+                  "id": "ask-status",
+                  "text": "Спросите лечащего врача, есть ли решение врачебной комиссии о паллиативной помощи",
+                  "branch": "no-vk",
+                  "verified": true,
+                  "verified_at": "2026-10-11",
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                },
+                {
+                  "id": "ask-vk",
+                  "text": "Если решения нет, попросите провести врачебную комиссию о паллиативной помощи до выписки",
+                  "branch": "no-vk",
+                  "norm_ids": [
+                    "208n-243n"
+                  ],
+                  "quote_refs": [
+                    {
+                      "quote_id": "208n-243n-p13"
+                    },
+                    {
+                      "quote_id": "208n-243n-p15"
+                    }
+                  ],
+                  "links": [
+                    {
+                      "label": "Что даёт заключение",
+                      "repo": "home-care-kit",
+                      "path": "conclusion/"
+                    }
+                  ],
+                  "verified": true,
+                  "verified_at": "2026-10-11",
+                  "source_ref": "raw/208n-243n/p006-p12-p17.txt",
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "papers",
+          "title": "Что значит каждая бумага",
+          "branch": "all",
+          "blocks": [
+            {
+              "id": "papers-list",
+              "kind": "checklist",
+              "print": true,
+              "verified": false,
+              "verified_at": null,
+              "review": {
+                "needs": "legal",
+                "reviewed_by": null,
+                "reviewed_at": null
+              },
+              "items": [
+                {
+                  "id": "care-impossible",
+                  "text": "Заявление о невозможности ухода",
+                  "detail": "Его просят, чтобы начать оформление социального обслуживания в стационаре. Прежде чем подписывать, спросите, куда направят человека и что будет дальше",
+                  "branch": "all",
+                  "verified": false,
+                  "verified_at": null,
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                },
+                {
+                  "id": "hospitalization-refusal",
+                  "text": "Отказ от госпитализации или от лечения",
+                  "detail": "Подписывает сам человек или его законный представитель. Спросите, что именно отклоняется и можно ли передумать",
+                  "branch": "all",
+                  "verified": false,
+                  "verified_at": null,
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "help",
+          "title": "Если не получилось",
+          "branch": "all",
+          "blocks": [
+            {
+              "id": "help-links",
+              "kind": "text",
+              "text": "Попросите ответ на бумаге. Мы поможем составить заявление и посчитаем срок ответа",
+              "links": [
+                {
+                  "label": "Заявления и жалобы, выписывают домой",
+                  "repo": "obrashchenie-kit",
+                  "path": "scenarios/discharge/"
+                }
+              ],
+              "print": false,
+              "verified": true,
+              "verified_at": "2026-10-11",
+              "review": {
+                "needs": "none",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "conclusion",
+      "title": "Что даёт заключение о паллиативной помощи",
+      "summary": "Показания дословно из приказа для разговора с врачом и то, что нужно просить отдельно",
+      "path": "conclusion/",
+      "minutes": 3,
+      "paper": [
+        "a4"
+      ],
+      "print_pages": {
+        "a4": 2
+      },
+      "storage": "none",
+      "validity": {
+        "rule": "none"
+      },
+      "draft": "both",
+      "version": "2026.10.11",
+      "verified": false,
+      "verified_at": null,
+      "review": {
+        "needs": "both",
+        "reviewed_by": null,
+        "reviewed_at": null
+      },
+      "situations": [
+        "conclusion"
+      ],
+      "steps": [
+        {
+          "id": "print",
+          "title": "Распечатать или сохранить PDF",
+          "text": "Возьмите лист на приём к врачу"
+        }
+      ],
+      "fields": [],
+      "sections": [
+        {
+          "id": "general",
+          "title": "Общие показания",
+          "blocks": [
+            {
+              "id": "ind-general",
+              "kind": "indications",
+              "text": "Ниже только дословный текст приказа, без толкования",
+              "groups": [
+                "general"
+              ],
+              "norm_ids": [
+                "208n-243n"
+              ],
+              "links": [
+                {
+                  "label": "Показания дословно",
+                  "repo": "pal-norms",
+                  "path": "indications/"
+                }
+              ],
+              "print": true,
+              "verified": false,
+              "verified_at": null,
+              "review": {
+                "needs": "both",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            },
+            {
+              "id": "vk-decides",
+              "kind": "quote",
+              "title": "Кто решает",
+              "text": "Взрослому заключение выдают по решению врачебной комиссии или консилиума врачей той организации, где он наблюдается и лечится. При злокачественном новообразовании с подтверждённым гистологией диагнозом решает врач-онколог. Ребёнку заключение выдаёт врачебная комиссия организации, где он наблюдается и лечится",
+              "norm_ids": [
+                "208n-243n"
+              ],
+              "quote_refs": [
+                {
+                  "quote_id": "208n-243n-p12"
+                },
+                {
+                  "quote_id": "208n-243n-p13"
+                },
+                {
+                  "quote_id": "208n-243n-p15"
+                }
+              ],
+              "print": true,
+              "verified": true,
+              "verified_at": "2026-10-11",
+              "source_ref": "raw/208n-243n/p006-p12-p17.txt",
+              "review": {
+                "needs": "legal",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            }
+          ]
+        },
+        {
+          "id": "group",
+          "title": "Показания по заболеванию",
+          "blocks": [
+            {
+              "id": "ind-group",
+              "kind": "indications",
+              "text": "Выберите группу заболеваний. Если нужной группы нет, спросите врача, какие показания к вам относятся",
+              "groups": [
+                "dementia",
+                "stroke",
+                "als",
+                "chf"
+              ],
+              "norm_ids": [
+                "208n-243n"
+              ],
+              "print": true,
+              "verified": false,
+              "verified_at": null,
+              "review": {
+                "needs": "both",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            }
+          ]
+        },
+        {
+          "id": "not-automatic",
+          "title": "Что не придёт само",
+          "blocks": [
+            {
+              "id": "na-list",
+              "kind": "not-automatic",
+              "text": "Заключение не включает это автоматически. Каждый пункт нужно попросить",
+              "print": true,
+              "verified": false,
+              "verified_at": null,
+              "review": {
+                "needs": "legal",
+                "reviewed_by": null,
+                "reviewed_at": null
+              },
+              "items": [
+                {
+                  "id": "na-copy",
+                  "text": "Копия заключения на руки",
+                  "who": "Больница или поликлиника, где принято решение",
+                  "when": "Сразу после решения",
+                  "norm_ids": [
+                    "208n-243n"
+                  ],
+                  "quote_refs": [
+                    {
+                      "quote_id": "208n-243n-p17"
+                    }
+                  ],
+                  "verified": true,
+                  "verified_at": "2026-10-11",
+                  "source_ref": "raw/208n-243n/p006-p12-p17.txt",
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                },
+                {
+                  "id": "na-devices",
+                  "text": "Медицинские изделия для ухода дома",
+                  "who": "Медицинская организация",
+                  "when": "По вашей просьбе",
+                  "norm_ids": [
+                    "505n",
+                    "398n"
+                  ],
+                  "links": [
+                    {
+                      "label": "Кто выдаёт изделия",
+                      "repo": "pal-devices-data",
+                      "path": ""
+                    }
+                  ],
+                  "verified": false,
+                  "verified_at": null,
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                },
+                {
+                  "id": "na-pain",
+                  "text": "Обезболивание и рецепты на дому",
+                  "who": "Лечащий врач",
+                  "when": "По вашей просьбе",
+                  "norm_ids": [
+                    "1094n"
+                  ],
+                  "verified": false,
+                  "verified_at": null,
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                },
+                {
+                  "id": "na-mse",
+                  "text": "Направление на медико-социальную экспертизу и обращение о социальном обслуживании",
+                  "who": "Организация, где принято решение о паллиативной помощи",
+                  "when": "Спросите сразу после решения",
+                  "norm_ids": [
+                    "208n-243n"
+                  ],
+                  "quote_refs": [
+                    {
+                      "quote_id": "208n-243n-p18"
+                    }
+                  ],
+                  "verified": true,
+                  "verified_at": "2026-10-11",
+                  "source_ref": "raw/208n-243n/p007-p18-p20.txt",
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                },
+                {
+                  "id": "na-stay",
+                  "text": "Пребывание близкого рядом в стационаре",
+                  "who": "Стационар",
+                  "when": "По вашей просьбе",
+                  "norm_ids": [
+                    "pgg-2026"
+                  ],
+                  "verified": false,
+                  "verified_at": null,
+                  "review": {
+                    "needs": "legal",
+                    "reviewed_by": null,
+                    "reviewed_at": null
+                  }
+                }
+              ]
+            },
+            {
+              "id": "na-help",
+              "kind": "text",
+              "text": "Если просили, а ответа нет, попросите ответ на бумаге",
+              "links": [
+                {
+                  "label": "Попросить ответ на бумаге",
+                  "repo": "obrashchenie-kit",
+                  "path": "case/",
+                  "params": {
+                    "new": "1",
+                    "s": "oral-refusal",
+                    "back": "conclusion"
+                  }
+                }
+              ],
+              "print": false,
+              "verified": true,
+              "verified_at": "2026-10-11",
+              "review": {
+                "needs": "none",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ahead",
+      "title": "Что подписать, пока человек может",
+      "summary": "Несколько вопросов и лист, что оформить на этой неделе",
+      "path": "ahead/",
+      "minutes": 3,
+      "paper": [
+        "a4"
+      ],
+      "print_pages": {
+        "a4": 1
+      },
+      "storage": "none",
+      "validity": {
+        "rule": "none"
+      },
+      "draft": "legal",
+      "version": "2026.10.11",
+      "verified": false,
+      "verified_at": null,
+      "review": {
+        "needs": "legal",
+        "reviewed_by": null,
+        "reviewed_at": null
+      },
+      "situations": [
+        "prepare",
+        "dying",
+        "turning-18"
+      ],
+      "steps": [
+        {
+          "id": "fill",
+          "title": "Ответить на вопросы",
+          "text": "Ответы не сохраняются и никуда не отправляются"
+        },
+        {
+          "id": "print",
+          "title": "Распечатать или сохранить PDF",
+          "text": "Возьмите лист к юристу или нотариусу"
+        }
+      ],
+      "fields": [],
+      "sections": [
+        {
+          "id": "result",
+          "title": "Что оформить на этой неделе",
+          "blocks": [
+            {
+              "id": "outcomes",
+              "kind": "outcomes",
+              "text": "Это не юридическая консультация. Перед тем как оформлять, покажите лист юристу или нотариусу",
+              "print": true,
+              "verified": false,
+              "verified_at": null,
+              "review": {
+                "needs": "legal",
+                "reviewed_by": null,
+                "reviewed_at": null
+              }
+            }
+          ]
+        }
+      ],
+      "tree": {
+        "start": "can-sign",
+        "questions": [
+          {
+            "id": "can-sign",
+            "text": "Человек сейчас сам понимает, что подписывает?",
+            "help": "Если сомневаетесь, отвечайте «Не всегда»",
+            "options": [
+              {
+                "value": "yes",
+                "label": "Да",
+                "next": "where"
+              },
+              {
+                "value": "sometimes",
+                "label": "Не всегда",
+                "next": "where"
+              },
+              {
+                "value": "no",
+                "label": "Нет",
+                "outcomes": [
+                  "guardianship",
+                  "poa-ends"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "where",
+            "text": "Где он сейчас?",
+            "options": [
+              {
+                "value": "home",
+                "label": "Дома",
+                "next": "travel"
+              },
+              {
+                "value": "hospital",
+                "label": "В больнице или хосписе",
+                "next": "matters",
+                "outcomes": [
+                  "hospital-poa"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "travel",
+            "text": "Может ли он доехать до нотариуса?",
+            "options": [
+              {
+                "value": "yes",
+                "label": "Да",
+                "next": "matters"
+              },
+              {
+                "value": "no",
+                "label": "Нет",
+                "next": "matters",
+                "outcomes": [
+                  "notary-home"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "matters",
+            "text": "Кто-то будет решать за него вопросы с поликлиникой, страховой компанией или МСЭ?",
+            "help": "МСЭ - медико-социальная экспертиза, она устанавливает инвалидность",
+            "options": [
+              {
+                "value": "yes",
+                "label": "Да",
+                "next": "money",
+                "outcomes": [
+                  "simple-poa"
+                ]
+              },
+              {
+                "value": "no",
+                "label": "Нет",
+                "next": "money"
+              }
+            ]
+          },
+          {
+            "id": "money",
+            "text": "Нужно ли получать за него пенсию или распоряжаться его счётом в банке?",
+            "options": [
+              {
+                "value": "yes",
+                "label": "Да",
+                "next": "health-info",
+                "outcomes": [
+                  "notary-poa"
+                ]
+              },
+              {
+                "value": "no",
+                "label": "Нет",
+                "next": "health-info"
+              }
+            ]
+          },
+          {
+            "id": "health-info",
+            "text": "Хочет ли он назвать, кому врачи могут сообщать о его здоровье?",
+            "options": [
+              {
+                "value": "yes",
+                "label": "Да",
+                "outcomes": [
+                  "health-info",
+                  "poa-ends"
+                ]
+              },
+              {
+                "value": "no",
+                "label": "Нет",
+                "outcomes": [
+                  "poa-ends"
+                ]
+              }
+            ]
+          }
+        ],
+        "outcomes": [
+          {
+            "id": "simple-poa",
+            "title": "Доверенность для поликлиники, страховой компании и МСЭ",
+            "what": "Какая форма нужна, простая письменная или у нотариуса, в разных местах отвечают по-разному. Спросите юриста и в той организации, куда пойдёте",
+            "take": [
+              "Паспорт человека",
+              "Паспорт того, кому выдаётся доверенность"
+            ],
+            "norm_ids": [
+              "gk-185"
+            ],
+            "verified": false,
+            "verified_at": null,
+            "review": {
+              "needs": "legal",
+              "reviewed_by": null,
+              "reviewed_at": null
+            }
+          },
+          {
+            "id": "hospital-poa",
+            "title": "Доверенность через администрацию больницы",
+            "what": "Доверенность на получение пенсии, пособий и почты может бесплатно заверить администрация стационара, где человек лечится. Спросите в отделении, кто это делает",
+            "take": [
+              "Паспорт человека",
+              "Паспорт того, кому выдаётся доверенность"
+            ],
+            "norm_ids": [
+              "gk-185-1"
+            ],
+            "quote_refs": [
+              {
+                "quote_id": "gk-185-1-p3"
+              }
+            ],
+            "verified": false,
+            "verified_at": null,
+            "review": {
+              "needs": "legal",
+              "reviewed_by": null,
+              "reviewed_at": null
+            }
+          },
+          {
+            "id": "notary-home",
+            "title": "Нотариус на дом",
+            "what": "Нотариус может приехать домой. Спросите заранее, какие документы подготовить и сколько стоит выезд",
+            "take": [
+              "Паспорт человека",
+              "Документы на то, чем нужно распоряжаться"
+            ],
+            "verified": false,
+            "verified_at": null,
+            "review": {
+              "needs": "legal",
+              "reviewed_by": null,
+              "reviewed_at": null
+            }
+          },
+          {
+            "id": "notary-poa",
+            "title": "Доверенность у нотариуса на пенсию и счёт",
+            "what": "Для банка обычно просят нотариальную доверенность. Уточните в банке и в Социальном фонде, какую доверенность они примут",
+            "take": [
+              "Паспорт человека",
+              "Паспорт того, кому выдаётся доверенность",
+              "Реквизиты счёта"
+            ],
+            "norm_ids": [
+              "gk-185-1"
+            ],
+            "verified": false,
+            "verified_at": null,
+            "review": {
+              "needs": "legal",
+              "reviewed_by": null,
+              "reviewed_at": null
+            }
+          },
+          {
+            "id": "health-info",
+            "title": "Кому сообщать сведения о здоровье",
+            "what": "Человек может письменно назвать, кому врачи могут сообщать о его здоровье. Спросите лечащего врача, как это оформить",
+            "norm_ids": [
+              "323-fz"
+            ],
+            "verified": false,
+            "verified_at": null,
+            "review": {
+              "needs": "legal",
+              "reviewed_by": null,
+              "reviewed_at": null
+            }
+          },
+          {
+            "id": "guardianship",
+            "title": "Если человек уже не может подписывать",
+            "what": "Доверенность в таком случае оформить нельзя. Решения идут через суд и органы опеки. Спросите юриста, с чего начать",
+            "verified": false,
+            "verified_at": null,
+            "review": {
+              "needs": "legal",
+              "reviewed_by": null,
+              "reviewed_at": null
+            }
+          },
+          {
+            "id": "poa-ends",
+            "title": "Доверенность прекращается со смертью",
+            "what": "После смерти человека его доверенность больше не действует. Деньги с его карты не снимайте",
+            "always": true,
+            "norm_ids": [
+              "gk-188"
+            ],
+            "quote_refs": [
+              {
+                "quote_id": "gk-188-p1"
+              }
+            ],
+            "verified": false,
+            "verified_at": null,
+            "review": {
+              "needs": "legal",
+              "reviewed_by": null,
+              "reviewed_at": null
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

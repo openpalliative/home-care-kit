@@ -1,0 +1,191 @@
+id: ahead
+title: Что подписать, пока человек может
+summary: Несколько вопросов и лист, что оформить на этой неделе
+path: ahead/
+minutes: 3
+paper: [a4]
+print_pages:
+  a4: 2
+storage: none
+validity:
+  rule: none
+draft: legal
+version: 2026.10.13
+verified: false
+verified_at:
+review: {needs: legal, reviewed_by: , reviewed_at: }
+situations: [prepare, dying, turning-18]
+steps:
+  - id: fill
+    title: Ответить на вопросы
+    text: Ответы не сохраняются и никуда не отправляются
+  - id: print
+    title: Распечатать или сохранить PDF
+    text: Возьмите лист к юристу или нотариусу
+fields: []
+sections:
+  - id: result
+    title: Что оформить на этой неделе
+    blocks:
+      - id: outcomes
+        kind: outcomes
+        text: Это не юридическая консультация. Перед тем как оформлять, покажите лист юристу или нотариусу
+        print: true
+        verified: false
+        verified_at:
+        review: {needs: legal, reviewed_by: , reviewed_at: }
+tree:
+  start: can-sign
+  questions:
+    - id: can-sign
+      text: Человек сейчас сам понимает, что подписывает?
+      help: Если сомневаетесь, отвечайте «Не всегда»
+      options:
+        - value: "yes"
+          label: Да
+          next: hand
+        - value: sometimes
+          label: Не всегда
+          next: hand
+        - value: "no"
+          label: Нет
+          outcomes: [guardianship, poa-ends]
+    - id: hand
+      text: Может ли он сам расписаться?
+      help: Например, если рука не слушается или плохо видно
+      options:
+        - value: "yes"
+          label: Да
+          next: where
+        - value: "no"
+          label: Нет
+          next: where
+          outcomes: [sign-for]
+    - id: where
+      text: Где он сейчас?
+      options:
+        - value: home
+          label: Дома
+          next: travel
+        - value: hospital
+          label: В больнице или хосписе
+          next: matters
+          outcomes: [hospital-poa]
+    - id: travel
+      text: Может ли он доехать до нотариуса?
+      options:
+        - value: "yes"
+          label: Да
+          next: matters
+        - value: "no"
+          label: Нет
+          next: matters
+          outcomes: [notary-home]
+    - id: matters
+      text: Кто-то будет решать за него вопросы с поликлиникой, страховой компанией или МСЭ?
+      help: МСЭ - медико-социальная экспертиза, она устанавливает инвалидность
+      options:
+        - value: "yes"
+          label: Да
+          next: money
+          outcomes: [simple-poa]
+        - value: "no"
+          label: Нет
+          next: money
+    - id: money
+      text: Нужно ли получать за него пенсию или распоряжаться его счётом в банке?
+      options:
+        - value: "yes"
+          label: Да
+          next: health-info
+          outcomes: [notary-poa]
+        - value: "no"
+          label: Нет
+          next: health-info
+    - id: health-info
+      text: Хочет ли он назвать, кому врачи могут сообщать о его здоровье?
+      options:
+        - value: "yes"
+          label: Да
+          outcomes: [health-info, poa-ends]
+        - value: "no"
+          label: Нет
+          outcomes: [poa-ends]
+  outcomes:
+    - id: simple-poa
+      title: Доверенность для поликлиники, страховой компании и МСЭ
+      what: Какая форма нужна, простая письменная или у нотариуса, в разных местах отвечают по-разному. Спросите юриста и в той организации, куда пойдёте
+      take:
+        - Паспорт человека
+        - Паспорт того, кому выдаётся доверенность
+      norm_ids: [gk-185]
+      verified: false
+      verified_at:
+      review: {needs: legal, reviewed_by: , reviewed_at: }
+    - id: hospital-poa
+      title: Доверенность через администрацию больницы
+      what: Доверенность на получение пенсии, пособий и почты может бесплатно заверить администрация стационара, где человек лечится. Спросите в отделении, кто это делает
+      take:
+        - Паспорт человека
+        - Паспорт того, кому выдаётся доверенность
+      norm_ids: [gk-185-1]
+      quote_refs:
+        - quote_id: gk-185-1-p3
+      verified: false
+      verified_at:
+      review: {needs: legal, reviewed_by: , reviewed_at: }
+    - id: notary-home
+      title: Нотариус на дом
+      what: Нотариус может приехать домой. Спросите заранее, какие документы подготовить и сколько стоит выезд
+      take:
+        - Паспорт человека
+        - Документы на то, чем нужно распоряжаться
+      verified: false
+      verified_at:
+      review: {needs: legal, reviewed_by: , reviewed_at: }
+    - id: notary-poa
+      title: Доверенность у нотариуса на пенсию и счёт
+      what: Для банка обычно просят нотариальную доверенность. Уточните в банке и в Социальном фонде, какую доверенность они примут
+      take:
+        - Паспорт человека
+        - Паспорт того, кому выдаётся доверенность
+        - Реквизиты счёта
+      norm_ids: [gk-185-1]
+      verified: false
+      verified_at:
+      review: {needs: legal, reviewed_by: , reviewed_at: }
+    - id: health-info
+      title: Кому сообщать сведения о здоровье
+      what: Человек может назвать, кому врачи могут сообщать о его здоровье, в том числе после его смерти. Это делают, когда подписывают согласие на медицинское вмешательство. Спросите лечащего врача, как это оформить
+      norm_ids: [323-fz, 315-fz-2021]
+      quote_refs:
+        - quote_id: 323fz-20-7-s2
+      verified: false
+      verified_at:
+      review: {needs: legal, reviewed_by: , reviewed_at: }
+    - id: guardianship
+      title: Если человек уже не понимает, что подписывает
+      what: Доверенность, подписанная человеком, который не понимает значения своих действий, может оказаться недействительной. Такие вопросы обычно решают через суд и органы опеки. Спросите юриста, с чего начать
+      verified: false
+      verified_at:
+      review: {needs: legal, reviewed_by: , reviewed_at: }
+    - id: sign-for
+      title: Если человек понимает, но не может расписаться сам
+      what: По его просьбе за него может расписаться другой человек. Подпись этого человека удостоверяет нотариус. Спросите нотариуса заранее, как это сделать
+      take:
+        - Паспорт человека
+        - Паспорт того, кто распишется за него
+      norm_ids: [gk-160]
+      verified: false
+      verified_at:
+      review: {needs: legal, reviewed_by: , reviewed_at: }
+    - id: poa-ends
+      title: Доверенность прекращается со смертью
+      what: После смерти человека его доверенность больше не действует. Деньги с его карты не снимайте
+      always: true
+      norm_ids: [gk-188]
+      quote_refs:
+        - quote_id: gk-188-p1-5
+      verified: false
+      verified_at:
+      review: {needs: legal, reviewed_by: , reviewed_at: }

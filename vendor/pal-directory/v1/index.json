@@ -1,0 +1,103 @@
+{
+ "repo": "pal-directory",
+ "generated_at": "2026-10-13T06:32:03Z",
+ "opsite_version": "0.2.16",
+ "datasets": [
+  {
+   "name": "addressees",
+   "path": "addressees.json",
+   "schema": "addressees.schema.json",
+   "schema_version": "1.1.0",
+   "version": "2026.10.11",
+   "data_date": "2026-10-13",
+   "content_sha256": "1e5ded6c8ea5baf282a0421e4b185ce88f7e47ac46153c0f6393d6923dea1424",
+   "bytes": 147937,
+   "items": 247,
+   "sha256": "34cdac02795bdc56eabb230029636ce1bed0751cc09a4337dc792a4d9c257754"
+  },
+  {
+   "name": "entrypoints",
+   "path": "entrypoints.json",
+   "schema": "entrypoints.schema.json",
+   "schema_version": "1.0.0",
+   "version": "2026.10.11",
+   "data_date": "2026-10-13",
+   "content_sha256": "b6dfd99968d8faa65013236b5162fe873c3b0adf5f359c6a66b9321db41a70b5",
+   "bytes": 2118,
+   "items": 3,
+   "sha256": "47244336b5b5151dde4d80201670542000e94a1921f4752a5cff05db20a9d6b0"
+  },
+  {
+   "name": "federal-lines",
+   "path": "federal-lines.json",
+   "schema": "federal-lines.schema.json",
+   "schema_version": "1.1.0",
+   "version": "2026.10.11",
+   "data_date": "2026-10-13",
+   "content_sha256": "aa449ff9d35ab752a5df22bfcaf73ba4cf351e579199137cba6d3dc309cbfeb8",
+   "bytes": 1880,
+   "items": 1,
+   "sha256": "db324411c081aaf9976f724485e5a0b26b403a955acf3adb9a3b46cf680d903b"
+  },
+  {
+   "name": "region-acts",
+   "path": "region-acts.json",
+   "schema": "region-acts.schema.json",
+   "schema_version": "1.0.0",
+   "version": "2026.10.11",
+   "data_date": "2026-10-13",
+   "content_sha256": "985cbdcb3c58cad0ce0e6a4bae32045581d6e1a17c35b5f833b03d0c5cc2200d",
+   "bytes": 357971,
+   "items": 306,
+   "sha256": "e5e3c1a93408096715b5db829a154a8b7b14b2909233da70d1bd32ca994e2c5f"
+  },
+  {
+   "name": "region-lines",
+   "path": "region-lines.json",
+   "schema": "region-lines.schema.json",
+   "schema_version": "1.0.0",
+   "version": "2026.10.11",
+   "data_date": "2026-10-13",
+   "content_sha256": "543878f48b14d2569162896495ed3becbfbfa6c796e2efe3109ead7154e3d2a9",
+   "bytes": 363116,
+   "items": 397,
+   "sha256": "b2fc769e3b325a5e8099f8ded6b4d808f1e32716b019d4cf58e1748f28369184"
+  },
+  {
+   "name": "regions",
+   "path": "regions.json",
+   "schema": "regions.schema.json",
+   "schema_version": "1.1.0",
+   "version": "2026.10.11",
+   "data_date": "2026-10-13",
+   "content_sha256": "83745e83d632d397a07c063a205aac474df41a0b73cc94441557ae577b3823f5",
+   "bytes": 57256,
+   "items": 83,
+   "sha256": "af96c1c6dda0e7cf76cc280f681fdae3e5d7307149026af0f8ab74cf75ecb601"
+  },
+  {
+   "name": "routers",
+   "path": "routers.json",
+   "schema": "routers.schema.json",
+   "schema_version": "1.0.0",
+   "version": "2026.10.11",
+   "data_date": "2026-10-13",
+   "content_sha256": "f4826d83df7c64a9c94296cb7a65c2031c7b3ab6fb461b1b5f25f59b21d49ced",
+   "bytes": 3600,
+   "items": 3,
+   "sha256": "ed2b7a77523c5f8b85e3058f0c9570c052ec1f4609c3f57512f8c7bea5b49212"
+  },
+  {
+   "name": "routes",
+   "path": "routes.json",
+   "schema": "routes.schema.json",
+   "schema_version": "1.1.0",
+   "version": "2026.10.11",
+   "data_date": "2026-10-13",
+   "content_sha256": "25e49e732fb2a39500d99aa492e899c6ff67535889c0d96325eabfc098dbd8df",
+   "bytes": 100257,
+   "items": 5,
+   "sha256": "ba34f47a375b6c8add03e82a212f36e7edb21b78446e20e99d588b86d7a0e419"
+  }
+ ]
+}

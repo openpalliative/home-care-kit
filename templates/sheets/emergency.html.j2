@@ -1,0 +1,112 @@
+{% extends "hc/layout.html.j2" %}
+{% from "partials/hi.html.j2" import hi %}
+{% import "partials/sheet.html.j2" as hc with context %}
+{% set sheet = site.hc.sheets[sheet_id] %}
+{% set crumb = sheet.title %}
+{% set sec = sheet.sections_view[0] %}
+{% set qrb = sec.blocks | selectattr("kind", "equalto", "qr") | list %}
+{% set how = sec.blocks | selectattr("id", "equalto", "how") | map(attribute="text") | list %}
+{% block title %}{{ sheet.title }}{% endblock %}
+{% block description %}{{ sheet.summary }}{% endblock %}
+{% block page_head %}<link rel="stylesheet" href="{{ url('assets/css/hc-sheet.css') }}">
+<script type="module" src="{{ url('assets/js/hc-emergency.js') }}"></script>{% endblock %}
+{% block page_class %} hc-page--sheet{% endblock %}
+{% block content %}
+{{ hc.head(sheet, "Главное о ребёнке на сложном уходе для бригады скорой и приёмного отделения. Лист A4 на холодильник и карточка в кошелёк") }}
+<hc-sheet class="hc-sheet" data-sheet="emergency" data-version="{{ sheet.version }}" data-storage="{{ sheet.storage }}" data-watermark-days="{{ sheet.validity.watermark_days or 90 }}">
+  {{ hc.nojs_note() }}
+  <div class="hc-top hc-js-only hc-screen">
+    <div class="hc-toolbar">{{ hc.blank_btn() }}</div>
+    {{ hc.steps(sheet) }}
+  </div>
+  <div class="hc-layout">
+    <div class="hc-form hc-js-only hc-screen">
+      {{ hc.ask("На листе медицинские данные ребёнка. Если телефоном или компьютером пользуются другие люди, не сохраняйте их здесь: лист можно заполнить и распечатать, но после закрытия вкладки он пропадёт") }}
+      <div class="hc-wizard" data-hc-wizard>
+        <section class="hc-step" data-hc-step="fill" id="hc-step-fill" aria-labelledby="hc-step-fill-t">
+          <h2 id="hc-step-fill-t" class="hc-step__title" tabindex="-1">Заполнить</h2>
+          <div data-hc-fill></div>
+          {{ hc.step_text(sheet, "fill", how) }}
+          <p class="hc-blank-line hc-phone-only">{{ hc.blank_btn() }}</p>
+          {{ hc.bar(first=true) }}
+        </section>
+        <section class="hc-step" data-hc-step="check" id="hc-step-check" aria-labelledby="hc-step-check-t" hidden>
+          <h2 id="hc-step-check-t" class="hc-step__title" tabindex="-1">Проверить</h2>
+          {{ hc.step_text(sheet, "check") }}
+          <fieldset class="hc-group">
+            <legend class="hc-group__title">Кто и когда проверил</legend>
+            <div data-hc-checkfields></div>
+            <button type="button" class="op-btn op-btn--secondary" data-hc-today>{{ hi("calendar-days") }}<span>Проверено сегодня</span></button>
+            <div class="hc-validity" data-hc-validity role="status" aria-live="polite"></div>
+          </fieldset>
+          {{ hc.bar() }}
+        </section>
+        <section class="hc-step" data-hc-step="print" id="hc-step-print" aria-labelledby="hc-step-print-t" hidden>
+          <h2 id="hc-step-print-t" class="hc-step__title" tabindex="-1">Распечатать или сохранить PDF</h2>
+          {{ hc.step_text(sheet, "print") }}
+          <fieldset class="op-choice hc-paperpick">
+            <legend class="op-field__label">Что печатать</legend>
+            <label class="op-choice__item"><input type="radio" name="hc-paper" value="a4" checked><span>Лист A4<span class="op-choice__hint">Повесьте на холодильник или у кровати</span></span></label>
+            <label class="op-choice__item"><input type="radio" name="hc-paper" value="wallet"><span>Карточка в кошелёк<span class="op-choice__hint">Печатается на листе A4, отрежьте по линии</span></span></label>
+          </fieldset>
+          {% if qrb %}
+          <label class="hc-toggle"><input type="checkbox" data-hc-qr-toggle checked><span>Добавить код на лист<span class="op-choice__hint">{{ qrb[0].text }}</span></span></label>
+          <div class="hc-qrinfo" data-hc-qr-info aria-live="polite"></div>
+          {% endif %}
+          <ul class="hc-tips">
+            <li>{{ hi("printer") }}<span>В настройках печати отключите колонтитулы, чтобы адрес страницы не попал на лист</span></li>
+            <li>{{ hi("lock") }}<span>Лист не пересылается в мессенджеры. Текст можно скопировать в медкарту своего телефона</span></li>
+          </ul>
+          <div class="hc-copy">
+            <button type="button" class="op-btn op-btn--secondary" data-hc-copy>{{ hi("copy") }}<span>Скопировать текст для медкарты в телефоне</span></button>
+            <p class="hc-copy__live" data-hc-copy-live role="status" aria-live="polite"></p>
+          </div>
+          <p class="hc-blank-line">{{ hc.blank_btn() }}</p>
+          {{ hc.bar(last=true) }}
+        </section>
+        <p class="hc-saved" data-hc-saved role="status" aria-live="polite"></p>
+        <p class="hc-savemode" data-hc-savemode hidden></p>
+        {{ hc.form_templates(sheet) }}
+      </div>
+    </div>
+    {{ hc.preview_open() }}
+      <article class="hc-paper hc-ea4" id="sheet-a4" aria-label="Лист A4">
+        <p class="hc-wmark" aria-hidden="true">Не проверено</p>
+        <header class="hc-paper__head">
+          <p class="hc-paper__kicker">{{ sheet.title }}</p>
+          <h2 class="hc-paper__title">Ребёнок на сложном уходе</h2>
+          {{ hc.paper_draft(sheet) }}
+        </header>
+        <div class="hc-ehead">
+          {% for b in sec.blocks if b.kind == "locked" %}{{ hc.locked(b) }}{% endfor %}
+          {% for b in sec.blocks if b.kind == "script" %}{{ hc.script(b) }}{% endfor %}
+        </div>
+        {% for b in qrb %}{{ hc.qr_block(b, "a4") }}{% endfor %}
+        {% for b in sec.blocks if b.kind == "fields" %}
+        {% if b.print is false %}{{ hc.form_only(b) }}{% else %}
+        <section class="hc-pblock hc-pblock--fields" data-hc-block="{{ b.id }}" data-hc-print="own" data-hc-form="{{ 'check' if b.id == 'checked' else 'fill' }}">
+          {% if b.title %}<h3 class="hc-pblock__title">{{ b.title }}</h3>{% endif %}
+          {% for f in b.field_list %}{{ hc.row(f) }}{% endfor %}
+        </section>
+        {% endif %}
+        {% endfor %}
+        {{ hc.sheet_footer(sheet, "emergency/", validity=false) }}
+      </article>
+      <article class="hc-paper hc-wallet" id="sheet-card" aria-label="Карточка в кошелёк">
+        <p class="hc-wallet__cut">Отрежьте по линии</p>
+        <div class="hc-wallet__card">
+          <p class="hc-wmark" aria-hidden="true">Не проверено</p>
+          <p class="hc-wallet__title">{{ sheet.title }}</p>
+          {% for b in sec.blocks if b.kind == "locked" %}{{ hc.locked(b) }}{% endfor %}
+          <div class="hc-wallet__rows">
+            {% for f in sheet.qr_fields %}{{ hc.row(f, "hc-row--card", f.qr_key, false) }}{% endfor %}
+          </div>
+          {% for b in qrb %}{{ hc.qr_block(b, "card") }}{% endfor %}
+          <p class="hc-wallet__foot">Черновик, текст не проверен медиком в РФ. openpalliative.github.io/home-care-kit/emergency/</p>
+        </div>
+      </article>
+    {{ hc.preview_close() }}
+  </div>
+</hc-sheet>
+{{ hc.more(sheet) }}
+{% endblock %}

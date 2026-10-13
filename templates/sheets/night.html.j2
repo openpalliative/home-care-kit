@@ -1,0 +1,89 @@
+{% extends "hc/layout.html.j2" %}
+{% from "partials/hi.html.j2" import hi %}
+{% import "partials/sheet.html.j2" as hc with context %}
+{% set sheet = site.hc.sheets[sheet_id] %}
+{% set crumb = sheet.title %}
+{% block title %}{{ sheet.title }}{% endblock %}
+{% block description %}{{ sheet.summary }}{% endblock %}
+{% block page_head %}<link rel="stylesheet" href="{{ url('assets/css/hc-sheet.css') }}">
+<script type="module" src="{{ url('assets/js/hc-night.js') }}"></script>{% endblock %}
+{% block page_class %} hc-page--sheet{% endblock %}
+{% block content %}
+{{ hc.head(sheet, "Номера на ночь и выходные с одной стороны, папка на случай с другой. Заполните, проверьте номера и распечатайте") }}
+<hc-sheet class="hc-sheet" data-sheet="night" data-version="{{ sheet.version }}" data-storage="{{ sheet.storage }}" data-recheck-days="{{ sheet.validity.recheck_days or 183 }}" data-line-days="{{ sheet.validity.line_days or 365 }}" data-verified-years="{{ site.hc.verified_years | join(',') }}">
+  {{ hc.nojs_note() }}
+  <div class="hc-top hc-js-only hc-screen">
+    <div class="hc-toolbar">{{ hc.blank_btn() }}</div>
+    {{ hc.steps(sheet) }}
+  </div>
+  <div class="hc-layout">
+    <div class="hc-form hc-js-only hc-screen">
+      {{ hc.ask("На листе будут номера, адрес и где лежат документы. Если телефоном или компьютером пользуются другие люди, не сохраняйте лист здесь: его можно заполнить и распечатать, но после закрытия вкладки он пропадёт") }}
+      <div class="hc-wizard" data-hc-wizard>
+      <section class="hc-step" data-hc-step="fill" id="hc-step-fill" aria-labelledby="hc-step-fill-t">
+        <h2 id="hc-step-fill-t" class="hc-step__title" tabindex="-1">Заполнить</h2>
+        {{ hc.sub_count() }}
+        <div data-hc-fill></div>
+        {{ hc.sub_tools() }}
+        {{ hc.step_text(sheet, "fill") }}
+        <p class="hc-blank-line hc-phone-only">{{ hc.blank_btn() }}</p>
+        {{ hc.bar(first=true) }}
+      </section>
+      <section class="hc-step" data-hc-step="check" id="hc-step-check" aria-labelledby="hc-step-check-t" hidden>
+        <h2 id="hc-step-check-t" class="hc-step__title" tabindex="-1">Проверить</h2>
+        {{ hc.step_text(sheet, "check") }}
+        <div class="hc-rx" data-hc-rx-status hidden></div>
+        <fieldset class="hc-group">
+          <legend class="hc-group__title">Номера на листе</legend>
+          <ul class="hc-verify" data-hc-verify></ul>
+          <p class="hc-empty" data-hc-verify-empty>Номеров пока нет. На листе останутся линии, впишите номера ручкой</p>
+          <div data-hc-checkfields></div>
+          <button type="button" class="op-btn op-btn--primary" data-hc-checked-btn>{{ hi("circle-check") }}<span>Номера проверены</span></button>
+          <div class="hc-validity" data-hc-validity role="status" aria-live="polite"></div>
+        </fieldset>
+        <h3 class="hc-notes__title">Чего не будет на листе</h3>
+        {{ hc.excluded_notes(sheet) }}
+        {{ hc.bar() }}
+      </section>
+      <section class="hc-step" data-hc-step="print" id="hc-step-print" aria-labelledby="hc-step-print-t" hidden>
+        <h2 id="hc-step-print-t" class="hc-step__title" tabindex="-1">Распечатать или сохранить PDF</h2>
+        {{ hc.step_text(sheet, "print") }}
+        <div class="hc-printstate" data-hc-printstate></div>
+        <ul class="hc-tips">
+          <li>{{ hi("printer") }}<span>Лучше с двух сторон одного листа. Если принтер не умеет, распечатайте два листа</span></li>
+          <li>{{ hi("folder-open") }}<span>Главная копия - бумага. Браузер может стереть записи, если сайт долго не открывать. Копию файлом можно сохранить на странице <a href="{{ url('saved/') }}">«Что сохранено»</a></span></li>
+        </ul>
+        <p class="hc-blank-line">{{ hc.blank_btn() }}</p>
+        {{ hc.bar(last=true) }}
+      </section>
+      <p class="hc-saved" data-hc-saved role="status" aria-live="polite"></p>
+      <p class="hc-savemode" data-hc-savemode hidden></p>
+      {{ hc.form_templates(sheet) }}
+      {% for b in sheet.fill_blocks if b.kind == "numbers" %}{% for l in b.links %}<template data-hc-numbers-link><p class="hc-links"><a href="{{ xurl(l.repo, l.path, l.get('params')) }}" data-hc-region-link>{{ l.label }}</a></p></template>{% endfor %}{% endfor %}
+      </div>
+    </div>
+    {{ hc.preview_open() }}
+      {% for side in (1, 2) %}
+      <article class="hc-paper hc-side" id="{{ 'side-1' if side == 1 else 'folder' }}" aria-label="Сторона {{ side }}">
+        <p class="hc-void" data-hc-void>Не действителен с <span data-hc-void-date></span>, номера не проверены</p>
+        {% for sec in sheet.sections_view if sec.side == side %}
+        <header class="hc-paper__head">
+          <p class="hc-paper__kicker">{{ sheet.title }}. Сторона {{ side }} из 2</p>
+          <h2 class="hc-paper__title">{{ sec.title }}</h2>
+          {{ hc.paper_draft(sheet) }}
+        </header>
+        {% for b in sec.blocks %}{{ hc.pblock(b, sheet) }}{% endfor %}
+        {% endfor %}
+        {% if side == 1 and sheet.check_fields %}
+        <section class="hc-formonly" data-hc-form="check" hidden>
+          {% for f in sheet.check_fields %}{{ hc.row(f) }}{% endfor %}
+        </section>
+        {% endif %}
+        {{ hc.sheet_footer(sheet, "night/", validity=(side == 1), who=(sheet.check_fields[0] if side == 1 and sheet.check_fields else none)) }}
+      </article>
+      {% endfor %}
+    {{ hc.preview_close() }}
+  </div>
+</hc-sheet>
+{{ hc.more(sheet) }}
+{% endblock %}

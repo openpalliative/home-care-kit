@@ -1,0 +1,245 @@
+id: emergency
+title: Лист для скорой
+summary: Главное о ребёнке на сложном уходе для бригады скорой и приёмного отделения, лист A4 и карточка в кошелёк
+path: emergency/
+minutes: 10
+paper: [a4, wallet]
+print_pages:
+  a4: 1
+  wallet: 1
+storage: ask
+validity:
+  rule: watermark
+  watermark_days: 90
+draft: medical
+version: 2026.10.13
+verified: false
+verified_at:
+review: {needs: medical, reviewed_by: , reviewed_at: }
+situations: [emergency-sheet, prepare]
+steps:
+  - id: fill
+    title: Заполнить
+    text: Лучше заполнять вместе с врачом или медсестрой выездной службы. Переписывайте из выписок и назначений
+  - id: check
+    title: Проверить
+    text: Укажите, кто проверил лист и когда. Проверяйте раз в 3 месяца и после каждой выписки
+  - id: print
+    title: Распечатать или сохранить PDF
+    text: Лист A4 повесьте на видное место, карточку положите в кошелёк или в сумку с аппаратом
+fields:
+  - id: child_name
+    label: Имя ребёнка
+    type: text
+    max_len: 40
+    required: true
+    autocomplete: "off"
+    qr_order: 1
+    qr_key: Имя
+    demo: Миша
+  - id: birth_date
+    label: Дата рождения
+    type: date
+    max_len: 10
+    qr_order: 2
+    qr_key: Родился
+    demo: "2018-04-12"
+  - id: diagnosis
+    label: Основное заболевание, как записано в выписке
+    hint: Перепишите из выписки слово в слово
+    type: textarea
+    max_len: 120
+    qr_order: 3
+    qr_key: Заболевание
+    demo: Пример, спинальная мышечная атрофия
+  - id: breathing
+    label: Дыхание, аппарат и режим, как записано врачом
+    hint: Если ребёнок дышит сам, так и напишите
+    type: textarea
+    max_len: 120
+    qr_order: 4
+    qr_key: Дыхание
+    demo: Пример, аппарат ночью, режим по назначению врача
+  - id: trach_main
+    label: Трахеостомическая трубка, модель и размер
+    hint: Перепишите с упаковки или из выписки
+    type: text
+    max_len: 60
+    qr_order: 5
+    qr_key: Трубка
+    demo: Пример, модель и размер с упаковки
+  - id: trach_spare
+    label: Запасная трубка и трубка на размер меньше, где лежат
+    type: text
+    max_len: 80
+    qr_order: 8
+    qr_key: Запасные
+    demo: Сумка у кровати, левый карман
+  - id: feeding
+    label: Зонд или стома, чем кормим
+    type: text
+    max_len: 100
+    qr_order: 7
+    qr_key: Питание
+    demo: Пример, гастростома, смесь по назначению врача
+  - id: usual_values
+    label: Обычные для ребёнка показатели дыхания, как записал врач
+    hint: Перепишите из выписки. Мы не подсказываем значения
+    type: textarea
+    max_len: 100
+    qr_order: 9
+    qr_key: Обычно
+  - id: pain_signs
+    label: Как ребёнок показывает боль
+    hint: Своими словами, как вы это видите
+    type: textarea
+    max_len: 120
+    demo: Морщится, учащается дыхание, поджимает ноги
+  - id: seizures
+    label: Судороги, как обычно выглядят
+    hint: Своими словами. Если судорог не бывает, так и напишите
+    type: textarea
+    max_len: 120
+  - id: allergies
+    label: Аллергии
+    type: text
+    max_len: 80
+    qr_order: 6
+    qr_key: Аллергии
+    demo: Нет известных
+  - id: pain_relief
+    label: Обезболивание по назначению врача, кто назначил, его телефон
+    hint: Перепишите из назначения врача слово в слово
+    type: textarea
+    max_len: 160
+    autocomplete: "off"
+    blank_lines: 3
+  - id: vk
+    label: Заключение врачебной комиссии о паллиативной помощи, номер и дата
+    type: text
+    max_len: 40
+    qr_order: 10
+    qr_key: Заключение ВК
+    demo: 12 от 01.09.2026 (пример)
+  - id: hospice
+    label: Выездная служба, название, телефон, работает ли круглосуточно
+    type: text
+    max_len: 80
+    qr_order: 11
+    qr_key: Выездная служба
+    demo: Выездная служба (пример), +7 000 000-00-11, круглосуточно
+  - id: parent
+    label: Родитель или кто рядом, имя и телефон
+    type: text
+    max_len: 60
+    qr_order: 12
+    qr_key: Родитель
+    demo: Мама Ольга, +7 000 000-00-14
+  - id: address
+    label: Адрес для скорой
+    hint: Город, улица, дом, квартира, подъезд, этаж, код домофона. Адрес нужен, чтобы прочитать его диспетчеру. В код на листе он не входит
+    type: textarea
+    max_len: 140
+    autocomplete: street-address
+    blank_lines: 2
+    demo: г. Примерный, ул. Садовая, д. 1, кв. 2, подъезд 1, этаж 3
+  - id: wishes
+    label: Пожелания, обсуждённые с выездной службой
+    hint: Например, куда везти и кого позвать. Обсудите это с врачом выездной службы
+    type: textarea
+    max_len: 200
+    fixed_caption: Это не юридический отказ от реанимации
+    blank_lines: 3
+  - id: checked_by
+    label: Кто проверил лист
+    hint: Врач, медсестра или родитель
+    type: text
+    max_len: 60
+    demo: Медсестра выездной службы
+  - id: checked_at
+    label: Дата проверки
+    type: date
+    max_len: 10
+    required: true
+    qr_order: 13
+    qr_key: Проверено
+    demo: "2026-10-01"
+sections:
+  - id: card
+    title: Лист для скорой
+    side:
+    blocks:
+      - id: life-threat
+        kind: locked
+        text: При угрозе жизни звоните 103 или 112
+        now_ids: [ambulance, emergency]
+        print: true
+        verified: true
+        verified_at: 2026-10-11
+        source_ref: now-yaml
+        review: {needs: none, reviewed_by: , reviewed_at: }
+      - id: dispatcher
+        kind: script
+        title: Что сказать диспетчеру
+        text: Звоните 103. Скажите диспетчеру
+        lines:
+          - "Ребёнок получает паллиативную помощь, его зовут {child_name}"
+          - "Возраст: {birth_date}"
+          - "Заболевание по выписке: {diagnosis}"
+          - "Дыхание и аппарат: {breathing}"
+          - "Адрес: {address}"
+        field_ids: [child_name, birth_date, diagnosis, breathing, address]
+        print: true
+        verified: false
+        verified_at:
+        review: {needs: medical, reviewed_by: , reviewed_at: }
+      - id: how
+        kind: text
+        title: Как пользоваться
+        text: Бригада читает лист за полминуты. Пишите коротко, как в выписке. Медицинские данные остаются только на этом устройстве и на бумаге
+        print: false
+        verified: true
+        verified_at: 2026-10-11
+        review: {needs: none, reviewed_by: , reviewed_at: }
+      - id: data
+        kind: fields
+        title: Главное о ребёнке
+        field_ids: [child_name, birth_date, diagnosis, breathing, trach_main, trach_spare, feeding, usual_values, pain_signs, seizures, allergies, pain_relief, vk, hospice, parent]
+        print: true
+        verified: true
+        verified_at: 2026-10-11
+        review: {needs: medical, reviewed_by: , reviewed_at: }
+      - id: data-address
+        kind: fields
+        title: Главное о ребёнке
+        text: Адрес печатается один раз, в словах для диспетчера
+        field_ids: [address]
+        screen: true
+        print: false
+        verified: true
+        verified_at: 2026-10-11
+        review: {needs: none, reviewed_by: , reviewed_at: }
+      - id: wishes
+        kind: fields
+        title: Пожелания
+        field_ids: [wishes]
+        print: true
+        verified: true
+        verified_at: 2026-10-11
+        review: {needs: both, reviewed_by: , reviewed_at: }
+      - id: qr
+        kind: qr
+        title: Код с данными
+        text: Код читается любой камерой телефона. Внутри только текст с этого листа, без ссылок
+        print: true
+        verified: true
+        verified_at: 2026-10-11
+        review: {needs: none, reviewed_by: , reviewed_at: }
+      - id: checked
+        kind: fields
+        title: Проверка
+        field_ids: [checked_by, checked_at]
+        print: true
+        verified: true
+        verified_at: 2026-10-11
+        review: {needs: none, reviewed_by: , reviewed_at: }

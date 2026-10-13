@@ -1,0 +1,64 @@
+{
+  "format": "openpalliative-dataset/1",
+  "dataset": "holiday-runs",
+  "repo": "home-care-kit",
+  "schema_version": "1.0.0",
+  "version": "2026.10.11",
+  "generated_at": "2026-10-11T12:00:00Z",
+  "data_date": "2026-10-11",
+  "stale_after_days": 90,
+  "license": "CC-BY-4.0",
+  "source": [
+    {
+      "id": "pal-norms-calendar",
+      "title": "Снимок календаря pal-norms (пример на выдуманных данных)",
+      "url": "https://openpalliative.github.io/pal-norms/data/v1/calendar.json"
+    }
+  ],
+  "content_sha256": "5b912d371c7ff42bddead7b5260fa97bbf9946cf7c2ceefe76d17204c43e0f53",
+  "counts": {
+    "items": 4,
+    "unverified": 2,
+    "excluded": 0
+  },
+  "items": [
+    {
+      "id": "year-2026",
+      "kind": "year",
+      "year": 2026,
+      "verified": true,
+      "verified_at": "2026-10-11",
+      "source_ref": "pal-norms-calendar"
+    },
+    {
+      "id": "year-2027",
+      "kind": "year",
+      "year": 2027,
+      "verified": false,
+      "verified_at": null,
+      "source_ref": "pal-norms-calendar"
+    },
+    {
+      "id": "run-2026-11-01",
+      "kind": "run",
+      "year": 2026,
+      "from": "2026-11-01",
+      "to": "2026-11-04",
+      "days": 4,
+      "verified": true,
+      "verified_at": "2026-10-11",
+      "source_ref": "pal-norms-calendar"
+    },
+    {
+      "id": "run-2026-12-31",
+      "kind": "run",
+      "year": 2026,
+      "from": "2026-12-31",
+      "to": "2027-01-11",
+      "days": 12,
+      "verified": false,
+      "verified_at": null,
+      "source_ref": "pal-norms-calendar"
+    }
+  ]
+}

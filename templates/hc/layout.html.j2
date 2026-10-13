@@ -1,0 +1,24 @@
+{% extends "op/base.html.j2" %}
+{% from "partials/hi.html.j2" import hi %}
+{% import "op/macros.html.j2" as op with context %}
+{% block head %}
+{% block page_head %}{% endblock %}
+<link rel="stylesheet" href="{{ url('assets/css/hc-print.css') }}" media="print">
+{% endblock %}
+{% block main %}
+<div class="op-wrap hc-page{% block page_class %}{% endblock %}">
+  {% if crumb %}
+  <div class="hc-screen">{{ op.crumbs([("openpalliative", hub("")), (site.title, url("")), (crumb, "")]) }}</div>
+  {% endif %}
+  {% if site.hc.fixtures %}
+  <p class="hc-fixtures hc-screen">{{ hi("info") }}<span><strong>Пример на выдуманных данных.</strong> Номера регионов, календарь и нормы на этой сборке взяты из тестового набора</span></p>
+  {% endif %}
+  <p class="hc-offline hc-screen" data-hc-offline hidden>{{ hi("wifi-off") }}<span>Нет интернета. Всё нужное для работы уже на этом устройстве</span></p>
+  {% block content %}{% endblock %}
+  <div class="hc-back hc-screen" data-hc-back hidden>
+    {% for s in opdata.situations %}
+    <a href="{{ hub('s/' ~ s.id ~ '/') }}" data-back="{{ s.id }}" hidden>Вернуться: {{ s.title }}</a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

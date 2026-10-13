@@ -1,0 +1,157 @@
+id: conclusion
+title: Что даёт заключение о паллиативной помощи
+summary: Кто решает о заключении, где читать показания и что нужно просить отдельно
+path: conclusion/
+minutes: 3
+paper: [a4]
+print_pages:
+  a4: 2
+storage: none
+validity:
+  rule: none
+draft: both
+version: 2026.10.13
+verified: false
+verified_at:
+review: {needs: both, reviewed_by: , reviewed_at: }
+situations: [conclusion]
+steps:
+  - id: print
+    title: Распечатать или сохранить PDF
+    text: Возьмите лист на приём к врачу
+fields: []
+sections:
+  - id: general
+    title: Общие показания
+    blocks:
+      - id: ind-general
+        kind: indications
+        text: Ниже только дословный текст приказа, без толкования
+        groups: [general]
+        norm_ids: [208n-243n]
+        links:
+          - label: Показания дословно
+            repo: pal-norms
+            path: indications/
+        print: true
+        verified: false
+        verified_at:
+        review: {needs: both, reviewed_by: , reviewed_at: }
+      - id: vk-decides
+        kind: quote
+        title: Кто решает
+        text: Взрослому заключение выдают по решению врачебной комиссии или консилиума врачей той организации, где он наблюдается и лечится. При злокачественном новообразовании решает врач-онколог, если диагноз подтверждён гистологически. Или участковый терапевт, врач общей практики, фельдшер, другой врач-специалист, если есть заключение онколога о том, что нужно симптоматическое лечение. Ребёнку заключение выдаёт врачебная комиссия организации, где он наблюдается и лечится
+        norm_ids: [208n-243n]
+        quote_refs:
+          - quote_id: 208n-243n-p12
+          - quote_id: 208n-243n-p13
+          - quote_id: 208n-243n-p15
+        print: true
+        verified: true
+        verified_at: 2026-10-12
+        source_ref: raw/208n-243n/p006-p12-p17.txt
+        review: {needs: legal, reviewed_by: , reviewed_at: }
+  - id: group
+    title: Показания по заболеванию
+    blocks:
+      - id: ind-group
+        kind: indications
+        text: Выберите группу заболеваний. Если нужной группы нет, спросите врача, какие показания к вам относятся
+        groups: [dementia, stroke, als, chf]
+        norm_ids: [208n-243n]
+        print: true
+        verified: false
+        verified_at:
+        review: {needs: both, reviewed_by: , reviewed_at: }
+  - id: not-automatic
+    title: Что не придёт само
+    blocks:
+      - id: na-list
+        kind: not-automatic
+        text: Заключение не включает это автоматически. Каждый пункт нужно попросить
+        print: true
+        verified: false
+        verified_at:
+        review: {needs: legal, reviewed_by: , reviewed_at: }
+        items:
+          - id: na-copy
+            text: Копия заключения на руки
+            who: Больница или поликлиника, где принято решение
+            when: Сразу после решения
+            norm_ids: [208n-243n]
+            quote_refs:
+              - quote_id: 208n-243n-p17
+            verified: true
+            verified_at: 2026-10-11
+            source_ref: raw/208n-243n/p006-p12-p17.txt
+            review: {needs: legal, reviewed_by: , reviewed_at: }
+          - id: na-devices
+            text: Медицинские изделия для ухода дома
+            who: Врачебная комиссия медицинской организации. Спросите лечащего врача
+            when: Решение в течение 3 рабочих дней после документов, передача в течение 5 рабочих дней после решения
+            norm_ids: [505n, 398n]
+            quote_refs:
+              - quote_id: 505n-p4
+              - quote_id: 505n-p5
+            links:
+              - label: Кто выдаёт изделия
+                repo: pal-devices-data
+                path: ""
+            verified: true
+            verified_at: 2026-10-12
+            source_ref: raw/505n/p003-p4-p5.txt
+            review: {needs: legal, reviewed_by: , reviewed_at: }
+          - id: na-pain
+            text: Обезболивание и рецепты на дому
+            who: Назначение решает лечащий врач
+            when: Спросите лечащего врача
+            norm_ids: [1094n]
+            verified: false
+            verified_at:
+            review: {needs: legal, reviewed_by: , reviewed_at: }
+          - id: na-mse
+            text: Направление на медико-социальную экспертизу и обращение о социальном обслуживании
+            who: Организация, где принято решение о паллиативной помощи
+            when: Спросите сразу после решения
+            norm_ids: [208n-243n]
+            quote_refs:
+              - quote_id: 208n-243n-p18
+            verified: true
+            verified_at: 2026-10-11
+            source_ref: raw/208n-243n/p007-p18-p20.txt
+            review: {needs: legal, reviewed_by: , reviewed_at: }
+          - id: na-stay
+            text: Уход близкого в стационаре
+            who: Больница. Правила ухода и доступа она устанавливает сама и размещает на своём сайте
+            when: Человек с инвалидностью I группы в круглосуточном стационаре имеет право на уход близкого, круглосуточный доступ для ухода бесплатный. Условия совместного пребывания с ребёнком до 4 лет, а со старшим при медицинских показаниях, включает территориальная программа региона
+            norm_ids: [pp-2188]
+            quote_refs:
+              - quote_id: pp-2188-inv1-care
+              - quote_id: pp-2188-child-costay
+            verified: true
+            verified_at: 2026-10-12
+            source_ref: raw/pp-2188/p014-p096-care.txt
+            review: {needs: legal, reviewed_by: , reviewed_at: }
+          - id: na-18
+            text: Переход во взрослую паллиативную помощь в 18 лет
+            who: Детская медицинская организация
+            when: Выписку направляют в поликлинику и во взрослую паллиативную службу не позже чем за 90 рабочих дней до 18-летия. Спросите, отправили ли её
+            norm_ids: [208n-243n]
+            quote_refs:
+              - quote_id: 208n-243n-p23
+            verified: true
+            verified_at: 2026-10-12
+            source_ref: raw/208n-243n/p008-p23.txt
+            review: {needs: legal, reviewed_by: , reviewed_at: }
+      - id: na-help
+        kind: text
+        text: Если просили, а ответа нет, попросите ответ на бумаге
+        links:
+          - label: Попросить ответ на бумаге
+            repo: obrashchenie-kit
+            path: case/
+            params: {new: "1", s: oral-refusal, back: conclusion}
+        print: false
+        verified: true
+        verified_at: 2026-10-11
+        review: {needs: none, reviewed_by: , reviewed_at: }

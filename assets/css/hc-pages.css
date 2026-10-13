@@ -1,0 +1,123 @@
+.hc-home h1 {
+  margin-top: 8px;
+}
+
+.hc-home__q {
+  margin-top: 8px;
+}
+
+.hc-cards {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px;
+  display: grid;
+  gap: 16px;
+}
+
+@media (min-width: 720px) {
+  .hc-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hc-card--first {
+    grid-column: 1 / -1;
+  }
+}
+
+.hc-card {
+  margin: 0;
+  max-width: none;
+}
+
+.hc-card--first {
+  border-width: 2px;
+  border-color: var(--op-text);
+}
+
+.hc-card .op-card__title {
+  margin: 0 0 6px;
+}
+
+.hc-card .op-card__text {
+  margin: 0 0 10px;
+}
+
+.hc-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  align-items: center;
+  margin: 0 0 8px;
+  color: var(--op-muted);
+  font-size: var(--op-size-small);
+}
+
+.hc-card__meta span + .op-icon {
+  margin-left: 12px;
+}
+
+.hc-home__links {
+  padding-left: 1.2em;
+  margin: 0 0 24px;
+}
+
+.hc-home__links li {
+  margin: 0 0 8px;
+}
+
+.hc-snaps {
+  list-style: none;
+  padding: 0;
+}
+
+.hc-snaps li {
+  margin: 0 0 16px;
+  padding: 12px 16px;
+  border: 1px solid var(--op-border);
+  border-radius: var(--op-radius);
+  background: var(--op-surface);
+}
+
+.hc-snaps p {
+  margin: 0 0 4px;
+}
+
+.hc-snaps__src {
+  color: var(--op-muted);
+  font-size: var(--op-size-small);
+}
+
+.hc-savedlist {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+}
+
+.hc-savedlist__item {
+  padding: 12px 16px;
+  margin: 0 0 8px;
+  border: 1px solid var(--op-border);
+  border-radius: var(--op-radius);
+  background: var(--op-surface);
+}
+
+.hc-savedlist__title {
+  display: block;
+  font-weight: 600;
+}
+
+.hc-savedlist__meta {
+  color: var(--op-muted);
+  font-size: var(--op-size-small);
+}
+
+.hc-i--clock { --hc-i: url("../../ui/icons/clock.svg"); }
+.hc-i--download { --hc-i: url("../../ui/icons/download.svg"); }
+.hc-i--trash-2 { --hc-i: url("../../ui/icons/trash-2.svg"); }
+.hc-i--triangle-alert { --hc-i: url("../../ui/icons/triangle-alert.svg"); }
+.hc-i--upload { --hc-i: url("../../ui/icons/upload.svg"); }
+.hc-i--lock { --hc-i: url("../../ui/icons/lock.svg"); }
+
+.hc-nowrap {
+  white-space: nowrap;
+}

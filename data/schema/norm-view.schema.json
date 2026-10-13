@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Листы для дома: нормы, цитаты и показания из снимка pal-norms (внутренний датасет)",
+  "type": "object",
+  "required": ["dataset", "items"],
+  "properties": {
+    "dataset": { "const": "norm-view" },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "verified", "verified_at", "printable"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+          "kind": { "enum": ["act", "quote", "indication", "indication-group"] },
+          "norm_id": { "type": "string" },
+          "title": { "type": "string" },
+          "status": { "enum": ["in_force", "not_yet_in_force", "repealed", "draft", "unknown"] },
+          "in_force_from": { "type": ["string", "null"] },
+          "eoNumber": { "type": ["string", "null"], "pattern": "^\\d{16}$" },
+          "url": { "type": ["string", "null"] },
+          "point": { "type": "string" },
+          "text_verbatim": { "type": ["string", "null"] },
+          "pdf_page": { "type": ["integer", "null"] },
+          "ocr_verified": { "type": "boolean" },
+          "group": { "enum": ["general", "dementia", "stroke", "als", "chf"] },
+          "order": { "type": "integer" },
+          "printable": { "type": "boolean" },
+          "reason": { "type": "string" },
+          "verified": { "type": "boolean" },
+          "verified_at": { "type": ["string", "null"] },
+          "source_ref": { "type": "string" }
+        }
+      }
+    }
+  }
+}

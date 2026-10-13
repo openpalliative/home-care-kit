@@ -1,0 +1,9 @@
+пакет: qrcode-generator
+версия: 2.0.4
+лицензия: MIT, Copyright (c) 2009 Kazuhiko Arase
+архив: https://registry.npmjs.org/qrcode-generator/-/qrcode-generator-2.0.4.tgz
+integrity архива: sha512-mZSiP6RnbHl4xL2Ap5HfkjLnmxfKcPWpWe/c+5XxCuetEenqmNFf1FH/ftXPCtFG5/TDobjsjz6sSNL0Sr8Z9g==
+путь в пакете: dist/qrcode.mjs
+файл здесь: qrcode.js, байт в байт тот же, только переименован
+sha256: ea91d7118a5395289170da848b7c6758b996163bfbccf312591ab65a4911b7c0
+дата проверки: 2026-10-11, файл из архива реестра сверен с этим по sha256

@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Человеку плохо прямо сейчас
+    url: https://openpalliative.github.io/now/
+    about: Здесь не служба помощи и никто не дежурит. Звоните 112 или 103. На этой странице номера экстренных служб
+  - name: Ошибка в цитате нормы или в сроке
+    url: https://github.com/openpalliative/pal-norms/issues/new/choose
+    about: Цитаты, показания и календарь листы берут из справочника норм, исправляются они там
+  - name: Уязвимость на сайте
+    url: https://github.com/openpalliative/home-care-kit/security/advisories/new
+    about: Сообщите закрыто, не в открытом issue. Подробности в SECURITY.md

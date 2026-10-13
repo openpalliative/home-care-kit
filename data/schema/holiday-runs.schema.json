@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Листы для дома: проверенные годы календаря и длинные нерабочие периоды из снимка pal-norms (внутренний датасет)",
+  "type": "object",
+  "required": ["dataset", "items"],
+  "properties": {
+    "dataset": { "const": "holiday-runs" },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "year", "verified", "verified_at"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^(year-\\d{4}|run-\\d{4}-\\d{2}-\\d{2})$" },
+          "kind": { "enum": ["year", "run"] },
+          "year": { "type": "integer", "minimum": 2000, "maximum": 2100 },
+          "from": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+          "to": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+          "days": { "type": "integer", "minimum": 3 },
+          "verified": { "type": "boolean" },
+          "verified_at": { "type": ["string", "null"] },
+          "source_ref": { "type": "string" }
+        }
+      }
+    }
+  }
+}

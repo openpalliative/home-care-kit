@@ -1,0 +1,50 @@
+{% extends "hc/layout.html.j2" %}
+{% import "partials/sheet.html.j2" as hc with context %}
+{% set sheet = site.hc.sheets[sheet_id] %}
+{% set crumb = sheet.title %}
+{% block title %}{{ sheet.title }}{% endblock %}
+{% block description %}{{ sheet.summary }}{% endblock %}
+{% block page_head %}<link rel="stylesheet" href="{{ url('assets/css/hc-doc.css') }}">
+<script type="module" src="{{ url('assets/js/hc-branch.js') }}"></script>{% endblock %}
+{% block page_class %} hc-page--doc{% endblock %}
+{% block content %}
+{{ hc.head(sheet, "Что получить на руки в больнице до выписки и что спросить. Распечатайте, возьмите с собой и отмечайте ручкой") }}
+<hc-branch class="hc-branch" data-mode="branch">
+  <fieldset class="op-choice hc-fork hc-js-only hc-screen" data-hc-fork>
+    <legend class="op-field__label">Есть заключение врачебной комиссии о паллиативной помощи?</legend>
+    <p class="op-field__hint">От ответа зависит часть списка. Ответ нигде не сохраняется</p>
+    <label class="op-choice__item"><input type="radio" name="hc-fork" value="has-vk"><span>Да, есть</span></label>
+    <label class="op-choice__item"><input type="radio" name="hc-fork" value="no-vk"><span>Нет</span></label>
+    <label class="op-choice__item"><input type="radio" name="hc-fork" value="unknown"><span>Не знаю<span class="op-choice__hint">Покажем оба списка</span></span></label>
+  </fieldset>
+  {{ hc.nojs_note() }}
+  <article class="hc-doc">
+    {{ hc.print_head(sheet) }}
+    {% for sec in sheet.sections_view %}
+    {% set screen_only = sec.blocks | selectattr("printable") | list | length == 0 %}
+    <section class="hc-dsec{{ ' hc-screen' if screen_only }}{{ ' hc-newpage' if sec.id == 'papers' }}" data-hc-branch="{{ sec.branch }}" aria-labelledby="hc-sec-{{ sec.id }}">
+      <h2 id="hc-sec-{{ sec.id }}">{{ sec.title }}</h2>
+      {% for b in sec.blocks %}
+      {% if b.kind == "checklist" %}{{ hc.checklist(b, sheet.path) }}
+      {% elif b.kind == "text" %}
+      <div class="{{ 'hc-screen' if not b.printable }}">
+        <p>{{ b.text }}</p>
+        {% if b.links %}<ul class="hc-linklist">{% for l in b.links %}<li><a href="{{ xurl(l.repo, l.path, l.get('params')) }}">{{ l.label }}</a></li>{% endfor %}</ul>{% endif %}
+      </div>
+      {% endif %}
+      {% endfor %}
+    </section>
+    {% if sec.id == "papers" %}
+    <section class="hc-dsec hc-notes-lines" aria-labelledby="hc-sec-notes">
+      <h2 id="hc-sec-notes">Записи в больнице</h2>
+      <p>Кто, когда и что ответил. Запишите имя и должность</p>
+      <div class="hc-ruled" aria-hidden="true">{% for _ in range(12) %}<span class="hc-line"></span>{% endfor %}</div>
+    </section>
+    {% endif %}
+    {% endfor %}
+    {{ hc.sheet_footer(sheet, "discharge/", validity=false) }}
+  </article>
+  {{ hc.print_bar() }}
+</hc-branch>
+{{ hc.more(sheet) }}
+{% endblock %}

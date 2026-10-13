@@ -1,0 +1,86 @@
+{% extends "hc/layout.html.j2" %}
+{% import "op/macros.html.j2" as op with context %}
+{% set crumb = "Откуда данные" %}
+{% block title %}Откуда данные{% endblock %}
+{% block description %}Версии листов, проверка юристом и медиком, даты снимков данных и что ещё не проверено{% endblock %}
+{% block page_head %}<link rel="stylesheet" href="{{ url('assets/css/hc-pages.css') }}">{% endblock %}
+{% block content %}
+<h1>Откуда данные</h1>
+<p class="op-lead">Тексты листов пишут люди. Нормы, календарь и номера регионов приходят готовыми снимками из соседних разделов openpalliative. Сайт сам в интернет не ходит</p>
+
+<section class="op-section" aria-labelledby="d-sheets">
+  <h2 id="d-sheets">Листы и их проверка</h2>
+  <div class="op-table-wrap" tabindex="0" role="region" aria-label="Таблица: Листы и их проверка">
+    <table class="op-table">
+      <thead><tr><th scope="col">Лист</th><th scope="col">Версия</th><th scope="col">Проверка</th></tr></thead>
+      <tbody>
+        {% for s in site.hc.order %}
+        <tr><td><a href="{{ url(s.path) }}">{{ s.title }}</a></td><td>{{ s.version }}</td><td>{% if s.review.reviewed_by %}{{ s.review_text }}{% else %}{{ unverified_inline() }} {{ s.review_text }}{% endif %}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {{ op.data_date(site.hc.data_date, 365, true, "Тексты листов от") }}
+</section>
+
+<section class="op-section" aria-labelledby="d-snap">
+  <h2 id="d-snap">Снимки соседних разделов</h2>
+  <p>Эти наборы сайт собирает для себя из снимков pal-norms и pal-directory. Они внутренние: их поля могут меняться без предупреждения</p>
+  <ul class="hc-snaps">
+    {% for env in site.hc.neighbours %}
+    <li>
+      <p class="hc-snaps__name"><span class="op-code">{{ env.dataset }}</span>: {% if env.dataset == "region-view" %}регионов в наборе {{ env.counts["items"] }}{% else %}записей {{ env.counts["items"] }}, не проверено {{ env.counts.unverified }}{% endif %}</p>
+      {% if env.dataset == "region-view" %}<p class="hc-snaps__src">Номеров по обезболиванию и паллиативной помощи: {{ site.hc.region_lines.all }}, проверено звонком: {{ site.hc.region_lines.checked }}. Ещё у {{ site.hc.region_lines.general | plural("региона", "регионов", "регионов") }} подсказкой показываем общую горячую линию минздрава региона. Без проверки номер на лист сам не попадает</p>{% endif %}
+      <p class="hc-snaps__src">{% for src in env.source %}<span data-verbatim>{{ src.title }}</span>{{ "; " if not loop.last }}{% endfor %}</p>
+      {{ op.data_date(env.data_date, env.stale_after_days, true, "Данные от") }}
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+
+<section class="op-section" aria-labelledby="d-unv">
+  <h2 id="d-unv">Что ещё не проверено</h2>
+  <p>Эти пункты видны на экране со статусом «Не проверено», но на печатный лист не попадают</p>
+  {% if site.hc.unverified %}
+  <div class="op-table-wrap" tabindex="0" role="region" aria-label="Таблица: Что ещё не проверено">
+    <table class="op-table">
+      <thead><tr><th scope="col">Лист</th><th scope="col">Пункт</th><th scope="col">Почему</th></tr></thead>
+      <tbody>
+        {% for u in site.hc.unverified %}<tr><td>{{ u.sheet }}</td><td>{{ u.text }}</td><td>{{ u.reason }}</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  {{ op.status("done", "Все пункты листов сверены") }}
+  {% endif %}
+</section>
+
+<section class="op-section" aria-labelledby="d-acts">
+  <h2 id="d-acts">Документы, на которые опираются листы</h2>
+  <div class="op-table-wrap" tabindex="0" role="region" aria-label="Таблица: Документы">
+    <table class="op-table">
+      <thead><tr><th scope="col">Документ</th><th scope="col">Номер публикации</th><th scope="col">Статус</th></tr></thead>
+      <tbody>
+        {% for a in site.hc.acts %}
+        <tr>
+          <td>{% if a.url %}<a href="{{ a.url }}">{{ a.title or a.id }}</a>{% else %}{{ a.title or a.id }}{% endif %}</td>
+          <td>{% if a.eoNumber %}<span class="op-code hc-nowrap">{{ a.eoNumber }}</span>{% else %}не указан{% endif %}</td>
+          <td>{% if a.printable %}Сверено {{ a.verified_at | ru_date }}{% else %}{{ unverified_inline() }} {{ a.reason }}{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="op-section" aria-labelledby="d-auto">
+  <h2 id="d-auto">Как листы живут без ручных обновлений</h2>
+  <ul>
+    <li>Карта на ночь сама считает срок годности: полгода после проверки номеров, но не дальше конца последнего утверждённого года календаря</li>
+    <li>Номер региона печатается, только если его проверили не раньше чем год назад</li>
+    <li>Раз в неделю снимки соседей обновляются через запрос на изменение, который смотрит человек. Сам сайт ничего не меняет</li>
+    <li>Пустой бланк печатается всегда, даже если срок истёк</li>
+  </ul>
+  <p>Наборы для других сайтов: <a href="{{ url('data/v1/index.json') }}">список наборов</a>, <a href="{{ url('data/v1/sheets.json') }}">листы целиком</a>. Лицензия текстов CC BY-SA 4.0</p>
+</section>
+{% endblock %}

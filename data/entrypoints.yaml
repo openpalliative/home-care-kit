@@ -1,0 +1,56 @@
+items:
+  - id: night
+    title: Карта на ночь и праздники
+    summary: Свои номера на ночь и выходные, что сказать диспетчеру скорой, папка с документами на случай
+    path: night/
+    audience: [family]
+    situations: [night-pain, dying, who-to-call, prepare]
+    offline: true
+    printable: true
+    maturity: demo
+    verified: false
+    verified_at:
+  - id: emergency
+    title: Лист для скорой
+    summary: Главное о ребёнке на сложном уходе для бригады скорой, лист A4 и карточка в кошелёк
+    path: emergency/
+    audience: [family]
+    situations: [emergency-sheet, prepare]
+    offline: true
+    printable: true
+    maturity: demo
+    verified: false
+    verified_at:
+  - id: discharge
+    title: До того, как забрать домой
+    summary: Что получить на руки в больнице до выписки и что значит каждая бумага
+    path: discharge/
+    audience: [family]
+    situations: [discharge, device]
+    offline: true
+    printable: true
+    maturity: demo
+    verified: false
+    verified_at:
+  - id: conclusion
+    title: Что даёт заключение о паллиативной помощи
+    summary: Кто решает о заключении, где читать показания и что нужно просить отдельно
+    path: conclusion/
+    audience: [family]
+    situations: [conclusion]
+    offline: true
+    printable: true
+    maturity: demo
+    verified: false
+    verified_at:
+  - id: ahead
+    title: Что подписать, пока человек может
+    summary: Несколько вопросов и лист, что оформить на этой неделе
+    path: ahead/
+    audience: [family]
+    situations: [prepare, dying, turning-18]
+    offline: true
+    printable: true
+    maturity: demo
+    verified: false
+    verified_at:

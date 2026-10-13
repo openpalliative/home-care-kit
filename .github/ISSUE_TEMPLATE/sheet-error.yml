@@ -1,0 +1,64 @@
+name: Ошибка в листе
+description: Неточный, опасный или непонятный пункт на одном из листов, ошибка печати
+title: "Лист: "
+labels: ["review:medical"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Это сообщение увидят все
+
+        **Не пишите ФИО, диагнозы, адреса, телефоны и номера документов. Не прикладывайте заполненный лист, его фото, скан или код с листа для скорой: внутри кода те же личные данные**
+
+        Чтобы показать ошибку, откройте лист с `?demo=1` в конце адреса: там выдуманные значения. Нам достаточно адреса страницы и пары слов о том, что не так
+  - type: dropdown
+    id: sheet
+    attributes:
+      label: Какой лист
+      options:
+        - Карта на ночь и праздники
+        - Лист для скорой
+        - До того, как забрать домой
+        - Что даёт заключение о паллиативной помощи
+        - Что подписать, пока человек может
+        - Главная, «Откуда данные» или «Что сохранено»
+    validations:
+      required: true
+  - type: dropdown
+    id: where
+    attributes:
+      label: Где ошибка
+      options:
+        - На экране
+        - На распечатанном листе или в PDF
+        - И там, и там
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: Что не так
+      description: Перепишите своими словами, как было бы правильно или понятнее. Если вы медик или юрист, напишите, почему так опасно или неверно
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Официальный источник, если ошибка в норме
+      description: Например, публикация на publication.pravo.gov.ru. Можно оставить пустым
+      placeholder: http://publication.pravo.gov.ru/document/...
+  - type: dropdown
+    id: device
+    attributes:
+      label: Где открывали
+      options:
+        - Телефон
+        - Планшет
+        - Компьютер
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Проверьте перед отправкой
+      options:
+        - label: В сообщении нет ФИО, диагнозов, адресов, телефонов и номеров документов, нет фото и сканов листа
+          required: true

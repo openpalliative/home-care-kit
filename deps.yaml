@@ -1,0 +1,17 @@
+pal-norms:
+  major: 1
+  datasets: [acts, quotes, calendar, indications]
+  version: 2026.10.11
+  data_date: '2026-10-11'
+  content_sha256: {acts: 157fd6f370c077d379560d119a161a308ff742040f4aef99259ee7da527f8a04,
+    quotes: e87da78d82a78382e54c2fb48298bd5cccd9f8f073ffdaa1b7f0c046a3337325, calendar: 3d018c8d06d6be8f6958ebf6dc59aa3b60764b9b3f9f86f832f758f897c0c976,
+    indications: 86152aaecede32917190b2eea3c73bbc2832c3cf427a5e99c305c045d900a960}
+  synced_at: '2026-10-13T06:32:31Z'
+pal-directory:
+  major: 1
+  datasets: [regions, region-lines]
+  version: 2026.10.11
+  data_date: '2026-10-13'
+  content_sha256: {regions: 83745e83d632d397a07c063a205aac474df41a0b73cc94441557ae577b3823f5,
+    region-lines: 543878f48b14d2569162896495ed3becbfbfa6c796e2efe3109ead7154e3d2a9}
+  synced_at: '2026-10-13T06:32:05Z'
