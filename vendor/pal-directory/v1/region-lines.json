@@ -4,8 +4,8 @@
  "repo": "pal-directory",
  "schema_version": "1.0.0",
  "version": "2026.10.11",
- "generated_at": "2026-10-13T06:32:03Z",
- "data_date": "2026-10-13",
+ "generated_at": "2026-10-19T09:57:22Z",
+ "data_date": "2026-10-19",
  "stale_after_days": 90,
  "license": "rzn-source-terms",
  "source": [
@@ -14,11 +14,11 @@
    "title": "Росздравнадзор. Номера телефонов «Горячих линий» в субъектах Российской Федерации",
    "url": "https://roszdravnadzor.gov.ru/i/upload/files/Главная%20страница/горячая%20линия/горячая%20линия-03.03.2026.xlsx",
    "license": "на условиях источника, с указанием источника: Росздравнадзор",
-   "retrieved_at": "2026-10-13",
+   "retrieved_at": "2026-10-19",
    "sha256": "0594711b33cfc449e5842c608a9b056b39f6cbaf9427209271132815cf9e3e90"
   }
  ],
- "content_sha256": "543878f48b14d2569162896495ed3becbfbfa6c796e2efe3109ead7154e3d2a9",
+ "content_sha256": "f9156f1fc527592f2c41e944fa65704eaeb6fce231759ff4fe185f294e712bde",
  "counts": {
   "items": 397,
   "unverified": 397,
