@@ -11,7 +11,7 @@ pal-directory:
   major: 1
   datasets: [regions, region-lines]
   version: 2026.10.11
-  data_date: '2026-10-13'
-  content_sha256: {regions: 83745e83d632d397a07c063a205aac474df41a0b73cc94441557ae577b3823f5,
-    region-lines: 543878f48b14d2569162896495ed3becbfbfa6c796e2efe3109ead7154e3d2a9}
-  synced_at: '2026-10-13T06:32:05Z'
+  data_date: '2026-10-26'
+  content_sha256: {regions: e1077f02aef62a50b0ac509b269847357db64897cafcfc59ad2989fd8b8deeb0,
+    region-lines: 0f2b2e7293efa512c74d920eca80cf0368317f3b42462963a616f665398b8174}
+  synced_at: '2026-10-27T10:59:08Z'
